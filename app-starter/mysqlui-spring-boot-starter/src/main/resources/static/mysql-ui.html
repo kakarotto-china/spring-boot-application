@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mysql ui</title>
+    <script src="js/jquery-1.10.1.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/httpVueLoader.js"></script>
+    <script src="js/element-ui.js"></script>
+    <link rel="stylesheet" href="css/element-ui.css">
+</head>
+<body>
+<div id="app">
+    <h3>Mysql UI : {{info}}</h3>
+    <el-container>
+        <el-aside width="200px">
+            <div class="block">
+                <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
+            </div>
+            <div v-if="!selectDbName" v-for="db in leftMenuList" class="block" @click="showTables(db)">
+                {{db}}
+            </div>
+            <div v-if="selectDbName" v-for="tb in leftMenuList" class="block" @click="selectTable(tb)">
+                {{tb}}
+            </div>
+        </el-aside>
+        <el-main>
+            <el-table
+                    :data="tableInfo.data"
+                    border
+                    style="width: 100%">
+                <el-table-column
+                        :prop="header"
+                        :label="header"
+                        width="180" v-for="header in tableInfo.headers">
+                </el-table-column>
+            </el-table>
+        </el-main>
+    </el-container>
+
+</div>
+</body>
+<script>
+    $.ajaxSetup({contentType: "application/json; charset=utf-8"});
+    Vue.use(httpVueLoader);
+    Vue.component('web-socket', "url:vue/webSocket.vue")
+    let app = new Vue({
+        el: '#app',
+        data: {
+            info: '',
+            filterDatas: [],
+            leftMenuList: [],
+            filterText: '',
+            selectDbName: '',
+            tableInfo: {
+                headers: [],
+                data: []
+            },
+            pageNo: 1,
+            pageSize: 100
+        },
+        watch: {
+            filterText(val, old) {
+                this.leftMenuList = this.filterDatas.filter(db => {
+                    return !val || db.indexOf(val) !== -1;
+                })
+            }
+        },
+        created: function () {
+            $.get('/mysqlui/dml/showDatabases', (data) => {
+                this.info = data.connectInfo
+                this.filterDatas = data.dbList
+                this.leftMenuList = data.dbList
+                this.selectDbName = ''
+            });
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            filterNode(value, data) {
+                if (!value) return true;
+                return data.label.indexOf(value) !== -1;
+            },
+            showTables(db) {
+                $.get(`/mysqlui/dml/showTables?dbName=${db}`, (data) => {
+                    this.filterDatas = data
+                    this.leftMenuList = data
+                    this.selectDbName = db
+                });
+            },
+            selectTable(tb) {
+                $.get(`/mysqlui/dml/selectTable?dbName=${this.selectDbName}&tabName=${tb}&pageNo=${this.pageNo}&pageSize=${this.pageSize}`, (data) => {
+                    this.tableInfo = data
+                });
+            }
+        }
+    });
+</script>
+<style>
+    .block {
+        border: 1px #35bcff solid;
+        background: snow;
+        margin: 5px 10px;
+        padding: 5px 5px;
+        cursor: pointer;
+    }
+</style>
+</html>
