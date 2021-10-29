@@ -1,0 +1,38 @@
+auto-table:
+  type: none #运行模式
+  catalog:  #数据源
+  base-bean-packages:  #注解扫描包
+  temp-column-name: $_auto_table_temp #临时字段,用来解决无法创建空表的问题
+  handlers:
+    create: com.example.type.CreateAutoTableType #create模式处理器
+    update: com.example.type.UpdateAutoTableType #update模式处理器
+  jdbc-types: #对应的数据类型模版字符串
+    mysql: #数据库类型,如: mysql,oracle 等等
+      varchar: varchar(@{length>0?length:255})
+      float: float(@{length>0?length:11},@{decimal>0?decimal:2})
+      double: double(@{length>0?length:11},@{decimal>0?decimal:2})
+      integer: int(@{length>0?length:11})
+      bigint: bigint(@{length>0?length:11})
+      bit: bit(1)
+      timestamp: timestamp
+      date: datetime
+  java-types: #在@Column注解中type属性留空时,会自动根据当前属性的java类型,进行映射,以下是映射规则
+    java.lang.String: varchar  
+    java.util.Date: date
+    java.lang.Integer: integer
+    java.lang.Double: double
+    java.lang.Float: float
+    java.lang.Long: bigint
+    java.lang.Short: integer    
+    java.lang.Boolean: bit
+    java.sql.Timestamp: timestamp
+  sql:  #不同数据库的DDL模版
+    mysql: 
+      create-primary-key: alter table `@{catalog}`.`@{tableName}` @{oldPkSize>0?'drop primary key,':''} add primary key (@{for(pk:primaryKeys ,) '`'+pk+'`'}) USING BTREE
+      create-column-sql: alter table `@{catalog}`.`@{tableName}` add `@{columnName}` @{type} @{notNull?'not null':''} @{autoincrement?'primary key AUTO_INCREMENT':''} @{defaultValue?("default '"+defaultValue+"'"):''} @{comment?(" comment '"+comment+"'"):''} 
+      create-table-sql: create table `@{catalog}`.`@{tableName}`(`@{tempColumnName}` int) comment '@{comment}' 
+      drop-column-sql: alter table `@{catalog}`.`@{tableName}` drop `@{columnName}`
+      drop-table-sql: drop table `@{catalog}`.`@{tableName}`
+      update-column-sql: alter table `@{catalog}`.`@{tableName}` modify `@{columnName}` @{type} @{notNull?'not null':''} @{comment?(" comment '"+comment+"'"):''}
+        
+        
