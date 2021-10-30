@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.enums;
 
 import com.example.exception.AutoTableException;
@@ -11,7 +7,6 @@ import java.sql.Types;
 /**
  * JdbcType枚举
  *
- * @author Jason
  */
 public enum JdbcType {
     /**

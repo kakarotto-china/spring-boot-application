@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.model;
 
 import com.example.converter.Field;
@@ -13,11 +9,8 @@ import java.sql.DatabaseMetaData;
 
 /**
  * 
- *  
  * 数据库字段信息
  * 
- * @author Jason
- *
  */
 @Data
 public class ColumnInfo {

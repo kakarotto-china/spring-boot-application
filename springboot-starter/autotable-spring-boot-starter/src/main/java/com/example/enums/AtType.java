@@ -1,11 +1,6 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.enums;
 /**
  * 生成模式
- * @author Jason
  *
  */
 public enum AtType {

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.syntax;
 
 import com.example.exception.AutoTableSyntaxException;
@@ -17,8 +13,6 @@ import java.util.Objects;
 
 /**
  * 语法解析器: @{for(item:collections) bodyCode}
- * @author Jason
- *
  */
 @Slf4j
 @Component

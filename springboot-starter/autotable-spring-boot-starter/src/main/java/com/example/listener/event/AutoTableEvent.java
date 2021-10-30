@@ -1,13 +1,8 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.listener.event;
 
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @author yWX978481
  * @since 2021/10/29
  */
 public class AutoTableEvent<T> extends ApplicationEvent {

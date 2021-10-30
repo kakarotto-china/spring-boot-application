@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.properties;
 
 import com.example.enums.ProductType;
@@ -12,7 +8,8 @@ import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 /**
- * @author yWX978481
+ * DDLAction mysql的基本实现
+ *
  * @since 2021/10/26
  */
 @Component

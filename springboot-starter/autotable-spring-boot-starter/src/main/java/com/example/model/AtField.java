@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.model;
 
 import lombok.AllArgsConstructor;
@@ -13,8 +9,6 @@ import java.lang.reflect.Field;
 /**
  * 反射包装类: Field
  * 
- * @author Jason
- *
  */
 @Data
 @AllArgsConstructor

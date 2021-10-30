@@ -1,11 +1,7 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.listener.event;
 
 /**
- * AutoTableStep1Event
+ * AutoTableApplicationRunner构造完成后调用
  *
  * @since 2021/10/29
  */

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.properties;
 
 import com.example.enums.ProductType;
@@ -9,8 +5,6 @@ import com.example.type.AutoTableType;
 
 /**
  * 数据库SQL配置
- *
- * @author Jason
  *
  */
 public interface DDLAction {

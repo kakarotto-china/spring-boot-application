@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
@@ -19,7 +15,6 @@ import java.lang.annotation.Target;
 /**
  * 开启AutoTable
  *
- * @author Jason
  */
 @Retention(RUNTIME)
 @Target(TYPE)

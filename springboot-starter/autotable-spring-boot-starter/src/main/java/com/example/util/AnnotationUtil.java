@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import com.example.model.AtField;
@@ -29,7 +25,6 @@ import java.util.Objects;
 /**
  * 注解操作工具类
  *
- * @author Jason
  */
 @Slf4j
 public class AnnotationUtil {

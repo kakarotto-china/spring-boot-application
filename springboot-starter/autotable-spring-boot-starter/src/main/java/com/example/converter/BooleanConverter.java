@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.converter;
 
 import com.example.model.ColumnInfo;
@@ -11,8 +7,6 @@ import org.springframework.stereotype.Component;
 /**
  * 布尔类型转换
  * 
- * @author Jason
- *
  */
 @Component
 public class BooleanConverter implements Converter<String, Boolean> {

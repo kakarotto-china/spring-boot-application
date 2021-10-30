@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import com.example.syntax.Syntax;
@@ -19,8 +15,6 @@ import java.util.regex.Pattern;
 
 /**
  * Sql解析工具类
- *
- * @author Jason
  */
 @Slf4j
 public class SqlUtil {

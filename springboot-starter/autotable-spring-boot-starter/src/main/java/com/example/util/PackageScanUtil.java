@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import com.example.annotation.AtColumn;
@@ -27,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author yWX978481
  * @since 2021/10/26
  */
 @Slf4j

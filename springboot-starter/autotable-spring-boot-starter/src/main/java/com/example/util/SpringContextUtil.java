@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import lombok.Getter;
@@ -19,7 +15,6 @@ import java.util.Map;
 /**
  * Spring容器上下文
  *
- * @author Jason
  */
 @Component
 public class SpringContextUtil implements ApplicationContextAware {

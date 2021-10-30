@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import com.example.converter.Field;
@@ -24,8 +20,6 @@ import java.util.stream.Collectors;
 /**
  * 数据库工具类
  * 
- * @author Jason
- *
  */
 @SuppressWarnings("unused")
 @Slf4j

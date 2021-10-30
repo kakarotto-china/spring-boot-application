@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.syntax;
 
 import com.example.exception.AutoTableSyntaxException;
@@ -16,7 +12,6 @@ import java.util.Objects;
 /**
  * 语法解析器: @{express?value1:value2} or @{express?defaultValue}
  *
- * @author Jason
  */
 @Component
 public class IfSyntax implements Syntax {

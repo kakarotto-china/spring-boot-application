@@ -1,11 +1,6 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.exception;
 /**
  * 语法错误异常
- * @author Jason
  *
  */
 public class AutoTableSyntaxException extends RuntimeException {

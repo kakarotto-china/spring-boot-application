@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.converter;
 
 import com.example.model.ColumnInfo;
@@ -13,8 +9,6 @@ import org.springframework.stereotype.Component;
 /**
  * Integer转Boolean
  * 
- * @author Jason
- *
  */
 @Component
 public class IntegerConverter implements Converter<Integer, Boolean> {

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.runner;
 
 import com.example.enums.AtType;
@@ -21,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +53,7 @@ public class AutoTableApplicationRunner implements ApplicationRunner {
 
     @PostConstruct
     private void init() {
-        // 构造完成后，注册属性
+        // 构造完成后
         applicationContext.publishEvent(new AutoTableInitEvent(new Object()));
     }
 

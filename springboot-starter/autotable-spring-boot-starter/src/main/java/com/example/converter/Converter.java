@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.converter;
 
 /**
@@ -9,8 +5,6 @@ package com.example.converter;
  * 
  * 根据字段名称进行转换
  * 
- * @author Jason
- *
  * @param <S> 原数据类型
  * @param <T> 目标数据类型
  */

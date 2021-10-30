@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
@@ -15,8 +11,6 @@ import java.lang.annotation.Target;
 /**
  * 字段信息
  * 
- * @author Jason
- *
  */
 @Retention(RUNTIME)
 @Target(FIELD)

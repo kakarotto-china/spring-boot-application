@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example;
 
 import com.example.annotation.EnableAutoTable;
@@ -24,7 +20,6 @@ import java.util.Map;
 /**
  * AutoTable 入口类
  *
- * @author Jason
  */
 @Configuration
 @ComponentScan("com.example")

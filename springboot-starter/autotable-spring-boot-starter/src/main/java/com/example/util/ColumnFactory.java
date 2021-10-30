@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.util;
 
 import com.example.annotation.AtColumn;
@@ -21,7 +17,6 @@ import java.util.Map;
 /**
  * 字段工厂
  *
- * @author Jason
  */
 @Slf4j
 public class ColumnFactory {

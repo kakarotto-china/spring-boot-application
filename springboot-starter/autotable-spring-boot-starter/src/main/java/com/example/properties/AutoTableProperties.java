@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.properties;
 
 import com.example.enums.AtType;
@@ -22,7 +18,6 @@ import java.util.Map;
 /**
  * 核心配置类
  *
- * @author Jason
  */
 @Slf4j
 @Data

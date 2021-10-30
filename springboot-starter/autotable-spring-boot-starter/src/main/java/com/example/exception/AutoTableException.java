@@ -1,14 +1,9 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
- */
-
 package com.example.exception;
 
 import cn.hutool.core.util.StrUtil;
 
 /**
  * AutoTable 统一异常对象
- * @author Jason
  *
  */
 public class AutoTableException extends RuntimeException {
