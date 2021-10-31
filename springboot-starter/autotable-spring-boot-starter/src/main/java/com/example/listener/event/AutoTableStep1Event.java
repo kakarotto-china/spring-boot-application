@@ -3,7 +3,7 @@ package com.example.listener.event;
 import java.sql.Connection;
 
 /**
- * AutoTableStep1Event 开始处理打开连接前触发，可以做一些基本参数检查
+ * AutoTableStep1Event 开始处理,打开连接触发，可以对一些数据进行初始化
  *
  * @since 2021/10/29
  */

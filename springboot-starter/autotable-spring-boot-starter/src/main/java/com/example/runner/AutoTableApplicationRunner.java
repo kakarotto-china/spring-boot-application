@@ -1,5 +1,7 @@
 package com.example.runner;
 
+import cn.hutool.core.util.StrUtil;
+import com.example.annotation.AtTable;
 import com.example.enums.AtType;
 import com.example.enums.ProductType;
 import com.example.exception.AutoTableException;
@@ -11,24 +13,18 @@ import com.example.properties.AutoTableProperties;
 import com.example.properties.DDLAction;
 import com.example.type.AutoTableType;
 import com.example.util.PackageScanUtil;
-
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
 /**
  * AutoTable 业务启动类
@@ -45,7 +41,7 @@ public class AutoTableApplicationRunner implements ApplicationRunner {
     private final ApplicationContext applicationContext;
 
     public AutoTableApplicationRunner(AutoTableProperties properties, DataSource dataSource,
-        ApplicationContext applicationContext) {
+                                      ApplicationContext applicationContext) {
         this.properties = properties;
         this.dataSource = dataSource;
         this.applicationContext = applicationContext;
@@ -74,7 +70,7 @@ public class AutoTableApplicationRunner implements ApplicationRunner {
             applicationContext.publishEvent("检查基本参数");
 
             // 获取需要创建表的实体对象
-            List<Class<?>> tableClasses = PackageScanUtil.scannerByAnnotation(properties.getBaseBeanPackages());
+            List<Class<?>> tableClasses = PackageScanUtil.scannerByAnnotation(properties.getBaseBeanPackages(), AtTable.class);
             ProductType productType = properties.getProductType();
             // 扫描实体
             List<TableInfo> tables = PackageScanUtil.scannerEntities(productType, tableClasses, properties);

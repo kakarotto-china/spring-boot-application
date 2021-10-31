@@ -1,7 +1,7 @@
 package com.example.listener.event;
 
 /**
- * AutoTableStep1Event 打开连接之后，可以对一些数据进行初始化
+ * AutoTableStep1Event 打开连接之后，可以做一些基本参数检查
  *
  * @since 2021/10/29
  */

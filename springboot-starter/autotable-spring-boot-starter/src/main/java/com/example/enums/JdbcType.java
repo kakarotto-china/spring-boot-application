@@ -6,9 +6,12 @@ import java.sql.Types;
 
 /**
  * JdbcType枚举
- *
  */
 public enum JdbcType {
+    /**
+     * 未知类型
+     */
+    UNKOWN(-1),
     /**
      * 自动识别
      */

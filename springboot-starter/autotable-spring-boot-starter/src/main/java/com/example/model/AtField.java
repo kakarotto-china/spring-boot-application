@@ -7,7 +7,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**
- * 反射包装类: Field
+ * 反射包装类: ResultSetField
  * 
  */
 @Data

@@ -1,6 +1,9 @@
 package com.example.util;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Assert;
 import com.example.annotation.AtColumn;
+import com.example.enums.AtEnum;
 import com.example.enums.JdbcType;
 import com.example.enums.ProductType;
 import com.example.exception.AutoTableException;
@@ -8,7 +11,9 @@ import com.example.model.AtField;
 import com.example.model.ColumnInfo;
 import com.example.properties.AutoTableProperties;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ClassUtils;
 
 import java.sql.Types;
 import java.util.HashMap;
@@ -16,7 +21,6 @@ import java.util.Map;
 
 /**
  * 字段工厂
- *
  */
 @Slf4j
 public class ColumnFactory {
@@ -36,14 +40,14 @@ public class ColumnFactory {
      * 根据属性对象获取字段信息
      *
      * @param productType 数据库类型
-     * @param field 属性对象
+     * @param field       属性对象
      * @return 列信息
      */
     public static ColumnInfo getColumnInfo(ProductType productType, AtField field) {
         ColumnInfo columnInfo = new ColumnInfo();
-        AtColumn column = field.getDeclaredAnnotation(AtColumn.class);
+        AtColumn column = AnnotationUtil.getAnnotation(field.getField(), AtColumn.class);
         columnInfo.setAutoincrement(column.autoincrement());
-        columnInfo.setColumnName(AnnotationUtil.getValue(column, "name", field.getName()));
+        columnInfo.setColumnName(column.name());
         columnInfo.setComment(column.comment());
         columnInfo.setLength(column.length());
         columnInfo.setDecimalDigit(column.decimalDigit());
@@ -61,7 +65,7 @@ public class ColumnFactory {
      * 根据JdbcType获取实际的数据库的数据类型
      *
      * @param productType 数据库类型
-     * @param columnInfo 列信息
+     * @param columnInfo  列信息
      * @return 数据类型
      */
     private static String getProductDbType(ProductType productType, ColumnInfo columnInfo) {
@@ -89,6 +93,7 @@ public class ColumnFactory {
      * @param field 列注解
      * @return {@link Types 数据类型}
      */
+    @SneakyThrows
     private static int getTypeCode(AtField field) {
         AtColumn column = field.getDeclaredAnnotation(AtColumn.class);
         Map<Class<?>, JdbcType> javaTypes = properties.getJavaTypes();
@@ -96,10 +101,16 @@ public class ColumnFactory {
             // 查找Java类映射匹配
             if (javaTypes.containsKey(field.getType())) {
                 return javaTypes.get(field.getType()).getType();
+            } else if (ClassUtils.isAssignable(AtEnum.class, field.getType())) {
+                Object[] enumConstants = field.getType().getEnumConstants();
+                Assert.notEmpty(enumConstants, "枚举类型{}没有实例", field.getType().getName());
+                AtEnum<?> atEnum = Convert.convert(AtEnum.class, enumConstants[0]);
+                Class<?> javaType = atEnum.getJavaType();
+                return javaTypes.get(javaType).getType();
             } else {
                 throw new AutoTableException("数据类型映射错误:" + field.getType());
             }
         }
-        return column.type().getType();
+        return JdbcType.UNKOWN.getType();
     }
 }

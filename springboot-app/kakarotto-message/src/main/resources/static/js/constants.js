@@ -1,0 +1,3 @@
+CODE_ENUM = {
+    SUCCCESS: 2000
+}

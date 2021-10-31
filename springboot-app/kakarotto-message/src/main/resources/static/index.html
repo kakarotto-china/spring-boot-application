@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="plugin/css/element.css"/>
+    <script src="plugin/js/vue.min.js"></script>
+    <script src="plugin/js/element.js"></script>
+    <script src="plugin/js/httpVueLoader.js"></script>
+    <script src="plugin/js/jquery.js"></script>
+    <script src="js/constants.js"></script>
+    <title>kakarotto-message</title>
+</head>
+<body>
+<div id="app">
+    <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
+                @onconect="wsconnect"></web-socket>
+</div>
+</body>
+<script>
+    Vue.use(httpVueLoader); // 使用httpVueLoader
+    Vue.component('web-socket', "url:vue/webSocket.vue")
+
+    let app = new Vue({
+        el: "#app",
+        data: {
+            ws: {
+                path: '/kakarotto/message',
+                instance: {}
+            }
+
+        },
+        created() {
+            $.get('./template/base-all', (resp) => {
+                if (resp.code === CODE_ENUM.SUCCCESS) {
+                    this.templates = resp.data;
+                } else {
+                    this.$message.error(resp.data);
+                }
+            });
+        },
+        methods: {
+            change() {
+                console.log(this.templateValue);
+            },
+            wsopen(event) {
+                event.target.send('{"messageType":"CLIENT","info":{"from":"", "to":"", "desc":""},"content":"ping"}')
+            },
+            wsmessage(event) {
+                console.log(event.data)
+            },
+            wsconnect(newValue) {
+                this.ws.instances = newValue;
+            }
+        }
+    });
+</script>
+</html>

@@ -1,5 +1,6 @@
 package com.example.properties;
 
+import com.example.enums.AtEnum;
 import com.example.enums.AtType;
 import com.example.enums.JdbcType;
 import com.example.enums.ProductType;

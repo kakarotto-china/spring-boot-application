@@ -15,8 +15,19 @@ import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
+import org.springframework.core.type.classreading.MetadataReader;
+import org.springframework.core.type.classreading.MetadataReaderFactory;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +38,11 @@ import java.util.Map;
  */
 @Slf4j
 public class PackageScanUtil {
+    private static final ResourcePatternResolver RESOURCE_PATTERN_RESOLVER = new PathMatchingResourcePatternResolver();
+
+    private static final MetadataReaderFactory READER_FACTORY = new CachingMetadataReaderFactory(
+            RESOURCE_PATTERN_RESOLVER);
+
     /**
      * 获得当前项目的根包
      *
@@ -51,7 +67,7 @@ public class PackageScanUtil {
      *
      * @return 扫描基础包下所有@AtTable标注的类
      */
-    public static List<Class<?>> scannerByAnnotation(List<String> baseBeanPackages) {
+    public static List<Class<?>> scannerByAnnotation(List<String> baseBeanPackages, Class<? extends Annotation> annotationType) {
         try {
             List<Class<?>> classList = new ArrayList<>();
             // 若为空，则扫描启动类下所有包
@@ -60,13 +76,42 @@ public class PackageScanUtil {
             }
             // 扫描指定了的基础包
             for (String packageName : baseBeanPackages) {
-                List<Class<?>> list = AnnotationUtil.scannerByAnnotation(packageName, AtTable.class);
+                List<Class<?>> list = scannerByAnnotation(packageName, annotationType);
                 classList.addAll(list);
             }
             return classList;
         } catch (IOException | ClassNotFoundException e) {
             throw new AutoTableException(e);
         }
+    }
+
+    /**
+     * 根据注解扫描类
+     *
+     * @param packageName 包名
+     * @param annotationType 注解
+     * @return 类集合
+     * @throws IOException IO异常
+     * @throws ClassNotFoundException 类找不到异常
+     */
+    public static List<Class<?>> scannerByAnnotation(String packageName, Class<? extends Annotation> annotationType)
+            throws IOException, ClassNotFoundException {
+        String classpathAllUrlPrefix = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + packageName.replace('.', '/')
+                + "/**/*.class";
+        Resource[] resources = RESOURCE_PATTERN_RESOLVER.getResources(classpathAllUrlPrefix);
+
+        AnnotationTypeFilter filter = new AnnotationTypeFilter(annotationType);
+        List<Class<?>> list = new ArrayList<>();
+        log.trace("正在扫描:{}", classpathAllUrlPrefix);
+        for (Resource resource : resources) {
+            MetadataReader reader = READER_FACTORY.getMetadataReader(resource);
+            if (filter.match(reader, READER_FACTORY)) {
+                Class<?> type = Class.forName(reader.getClassMetadata().getClassName());
+                list.add(type);
+                log.trace("扫描结果:{}", type.getName());
+            }
+        }
+        return list;
     }
 
     public static List<TableInfo> scannerEntities(ProductType type, List<Class<?>> tableClasses,
@@ -85,8 +130,8 @@ public class PackageScanUtil {
             table.setPrimaryKeys(primaryKeys);
 
             table.setCatalog(properties.getCatalog());
-            AtTable tableAnnotation = clazz.getDeclaredAnnotation(AtTable.class);
-            table.setTableName(AnnotationUtil.getValue(tableAnnotation, "name", clazz.getSimpleName()));
+            AtTable tableAnnotation = AnnotationUtil.getAnnotation(clazz, AtTable.class);
+            table.setTableName(tableAnnotation.name());
             table.setComment(tableAnnotation.comment());
             table.setEngine(tableAnnotation.engine());
 
