@@ -1,33 +1,25 @@
 package com.example.converter;
 
-import cn.hutool.core.convert.Convert;
-import com.example.model.ColumnInfo;
+import cn.hutool.core.util.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.DatabaseMetaData;
 
-import org.springframework.stereotype.Component;
-
 /**
  * Integer转Boolean
- * 
  */
+@Slf4j
 public class ColumnInfoIntegerConverter implements Converter<Boolean> {
-
-	private static final String NULLABLE = "NULLABLE";
-
-	@Override
-	public Boolean converter(Class<?> clazz, String columnName, Object sourceValue) {
-		if (clazz == ColumnInfo.class) {
-			if (NULLABLE.equals(columnName)) {
-				Integer integer = Convert.toInt(sourceValue);
-				if (DatabaseMetaData.columnNoNulls == integer) {
-					return false;
-				} else if (DatabaseMetaData.columnNullable == integer) {
-					return true;
-				}
-			}
-		}
-		return null;
-	}
+    @Override
+    public Boolean converter(Class<?> clazz, String columnName, Object sourceValue) {
+        Boolean result = null;
+        if (ObjectUtil.equal(sourceValue, DatabaseMetaData.columnNoNulls)) {
+            result = false;
+        } else if (ObjectUtil.equal(sourceValue, DatabaseMetaData.columnNullable)) {
+            result = true;
+        }
+        log.debug("{}.{} convert to {}", clazz.getSimpleName(), columnName, result);
+        return result;
+    }
 
 }
