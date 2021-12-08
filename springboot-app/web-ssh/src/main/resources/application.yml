@@ -1,0 +1,14 @@
+server:
+  port: 5555
+spring:
+  profiles:
+    active: dev
+
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+
+logging:
+  level:
+    com.myyf.message: debug
+    cn.jasonone.at: debug
+    com.example: debug

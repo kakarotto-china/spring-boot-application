@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>WebSSH</title>
+    <link rel="stylesheet" href="plugin/css/xterm.css"/>
+<!--    <link rel="stylesheet" href="plugin/css/xterm@4.15.0.css"/>-->
+    <link rel="stylesheet" href="plugin/css/element.css"/>
+    <script src="plugin/js/vue.min.js"></script>
+    <script src="plugin/js/element.js"></script>
+    <script src="plugin/js/httpVueLoader.js"></script>
+    <script src="plugin/js/xterm.js" charset="utf-8"></script>
+    <script src="plugin/js/vue-resource.min.js"></script>
+<!--    <script src="plugin/js/xterm@4.15.0.js" charset="utf-8"></script>-->
+<!--    <script src="plugin/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>-->
+<!--    <script src="plugin/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>-->
+</head>
+<body>
+<div id="app">
+    {{ connectInfo.name}}@{{ connectInfo.host }}-online:{{online}}
+    <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
+                @onconect="wsconnect"></web-socket>
+    <div class="terminal"></div>
+</div>
+<script src="js/enum.js" charset="utf-8"></script>
+<script src="js/web-ssh.js" charset="utf-8"></script>
+</body>
+</html>
