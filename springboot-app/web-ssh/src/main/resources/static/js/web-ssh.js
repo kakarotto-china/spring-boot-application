@@ -1,19 +1,4 @@
-let checkSignin = async () => {
-    Vue.http.headers.common['token'] = getCookie('token')
-    Vue.http.get('../user/check-signin').then(
-        success => {
-            let body = success.body
-            if (body.code !== 2000) {
-                console.log(body)
-                window.location.href = './html/signin.html'
-            }
-        }, fail => {
-            console.error(fail)
-        })
-}
-
 checkSignin()
-
 // 开始加载
 Vue.use(httpVueLoader); // 使用httpVueLoader
 Vue.component('web-socket', "url:../vue/webSocket.vue")
