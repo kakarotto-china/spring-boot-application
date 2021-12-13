@@ -5,7 +5,9 @@ import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebSHHApplication;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.SSHConnectionInfo;
+import com.myyf.webssh.entity.UserSSH;
 import com.myyf.webssh.exception.UnSupportedOperationException;
+import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.SSHService;
 import com.myyf.webssh.ws.AbstractWsTextServer;
 import com.myyf.webssh.ws.config.WsTextCodec;
@@ -51,7 +53,7 @@ public class WebSHHWsTextServer extends AbstractWsTextServer {
         String desc = text.getInfo().getDesc();
         switch (desc) {
             case "初始化":
-                init();
+                init(text.getContent());
                 break;
             case "resize":
                 break;
@@ -63,8 +65,15 @@ public class WebSHHWsTextServer extends AbstractWsTextServer {
         }
     }
 
-    private void init() {
+    private void init(String content) {
+        long id = Long.parseLong(content);
+        UserSSHMapper userSSHMapper = WebSHHApplication.getContext().getBean(UserSSHMapper.class);
+        UserSSH userSSH = userSSHMapper.selectById(id);
         SSHConnectionInfo sshConnectionInfo = new SSHConnectionInfo();
+        sshConnectionInfo.setHost(userSSH.getHost());
+        sshConnectionInfo.setUsername(userSSH.getUser());
+        sshConnectionInfo.setPasswd(userSSH.getPasswd());
+        sshConnectionInfo.setPort(userSSH.getPort());
         session = sshService.connectSession(sshConnectionInfo);
         channel = sshService.connectChannel(session, sshConnectionInfo);
         sshService.consumerTerminal(channel, bytesConsumer);

@@ -21,17 +21,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class LoginInterceptor implements HandlerInterceptor {
-    private final String[] indexHtmls;
     private final String signinHtml;
     private final String tokenName;
 
-    public LoginInterceptor(String signinHtml, String tokenName, String indexHtml, String... any) {
-        List<String> indexHtmlList = CollUtil.newArrayList();
-        indexHtmlList.add(indexHtml);
-        if (any != null) {
-            indexHtmlList.addAll(Arrays.asList(any));
-        }
-        this.indexHtmls = indexHtmlList.toArray(new String[0]);
+    public LoginInterceptor(String signinHtml, String tokenName) {
         this.signinHtml = signinHtml;
         this.tokenName = tokenName;
     }
@@ -74,14 +67,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         checkSignin(request, response);
-        return true;
-    }
-
-    private boolean resourceHandler(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String uri = request.getRequestURI();
-        if (StrUtil.equalsAny(uri, indexHtmls)) {
-            checkSignedRedirect(request, response);
-        }
         return true;
     }
 

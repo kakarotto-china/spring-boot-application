@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="../plugin/css/element.css"/>
+    <link rel="stylesheet" href="../css/jump.css"/>
     <script src="../plugin/js/vue.min.js"></script>
     <script src="../plugin/js/element.js"></script>
+    <script src="../plugin/js/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app">
-    {{opt}}成功，{{second}}秒后跳转到<a :href="page">{{pageName}}</a>
+    <div v-if="jump">
+        <div v-if="jump !== JUMP_TYPE.VERIFY">
+            {{this.delayed.opt}}，{{this.delayed.second}}秒后跳转到<a :href="this.delayed.page">{{this.delayed.pageName}}</a>
+        </div>
+        <div v-if="jump === JUMP_TYPE.VERIFY">
+            <div>需要进行邮件验证</div>
+            <div>{{this.verify.opt}}：{{this.verify.email}}，请按照提示进行操作完成后自动跳转到{{this.verify.pageName}}</div>
+        </div>
+    </div>
+    <div v-if="!jump">
+        页面加载时，传入不支持的跳转类型{{jump}}
+    </div>
 </div>
 </body>
 <script src="../js/common.js" charset="utf-8"></script>

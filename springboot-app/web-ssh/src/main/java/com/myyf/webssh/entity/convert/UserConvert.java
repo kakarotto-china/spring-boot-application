@@ -7,7 +7,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface UserConvert {
-
     User toUser(UserSignupDto userSignupDto);
 
     User toUser(UserSigninDto userSigninDto);

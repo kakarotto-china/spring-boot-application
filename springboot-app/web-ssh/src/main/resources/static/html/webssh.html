@@ -1,7 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <title>WebSSH</title>
+    <meta charset="UTF-8">
+    <title>Web SSH</title>
     <link rel="stylesheet" href="../plugin/css/xterm.css"/>
 <!--    <link rel="stylesheet" href="plugin/css/xterm@4.15.0.css"/>-->
     <link rel="stylesheet" href="../plugin/css/element.css"/>
@@ -15,10 +16,13 @@
 </head>
 <body>
 <div id="app">
-    {{ connectInfo.username}}@{{ connectInfo.host }}-online:{{online}}
-    <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
-                @onconect="wsconnect"></web-socket>
-    <div class="terminal"></div>
+    <div v-if="tid">
+        {{ connectInfo.username}}@{{ connectInfo.host }}-online:{{online}}
+        <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
+                    @onconect="wsconnect"></web-socket>
+        <div class="terminal"></div>
+    </div>
+    <div v-if="!tid">资源访问错误：{{tid}}</div>
 </div>
 <script src="../js/common.js" charset="utf-8"></script>
 <script src="../js/web-ssh.js" charset="utf-8"></script>

@@ -1,27 +1,20 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>WebSSH</title>
-    <link rel="stylesheet" href="plugin/css/xterm.css"/>
-<!--    <link rel="stylesheet" href="plugin/css/xterm@4.15.0.css"/>-->
+    <meta charset="UTF-8">
+    <title>Terminal</title>
     <link rel="stylesheet" href="plugin/css/element.css"/>
     <script src="plugin/js/vue.min.js"></script>
     <script src="plugin/js/element.js"></script>
-    <script src="plugin/js/httpVueLoader.js"></script>
-    <script src="plugin/js/xterm.js" charset="utf-8"></script>
     <script src="plugin/js/vue-resource.min.js"></script>
-<!--    <script src="plugin/js/xterm@4.15.0.js" charset="utf-8"></script>-->
-<!--    <script src="plugin/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>-->
-<!--    <script src="plugin/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>-->
 </head>
 <body>
 <div id="app">
-    {{ connectInfo.name}}@{{ connectInfo.host }}-online:{{online}}
-    <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
-                @onconect="wsconnect"></web-socket>
-    <div class="terminal"></div>
+    <el-button type="primary" @click="openTerminal()">打开终端</el-button>
+    <el-button @click="signout()">退出</el-button>
+    <el-button type="text" v-for="userSSH in userSSHList" @click="openTerminal(userSSH.id)">{{userSSH.name}}</el-button>
 </div>
 <script src="js/common.js" charset="utf-8"></script>
-<script src="js/web-ssh.js" charset="utf-8"></script>
+<script src="js/index.js" charset="utf-8"></script>
 </body>
 </html>

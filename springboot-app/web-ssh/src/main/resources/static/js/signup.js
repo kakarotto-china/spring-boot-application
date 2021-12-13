@@ -74,18 +74,20 @@ let app = new Vue({
                     console.log('error submit!!');
                     return false;
                 }
-                this.$http.post('../user/signup', this.signupForm).then(
-                    success => {
-                        let body = success.body
-                        if(body.code === 2000){
-                            setCookie('jump', JUMP_TYPE.SIGN_UP, 7)
-                            window.location.href='./jump.html'
-                        }else{
-                            console.log(body)
-                        }
-                    }, fail => {
-                        console.log(fail)
-                    })
+                // 发送验证邮件
+                this.$http.post('../user/verify-producer', this.signupForm).then(success => {
+                    let body = success.body
+                    if(body.code !== 2000){
+                        alert("邮件发送失败")
+                        return
+                    }
+                    // 发送成功则跳转到等待验证页面
+                    setCookie('jump', JUMP_TYPE.VERIFY, 7)
+                    setCookie('temp', JSON.stringify(this.signupForm), 7)
+                    window.location.href='./jump.html'
+                }, fail => {
+                    console.error(fail)
+                })
             });
         },
         reset(formName) {

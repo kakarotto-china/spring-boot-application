@@ -27,7 +27,7 @@ public class WebSHHApplication implements WebMvcConfigurer, ApplicationContextAw
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor("./html/signin.html", "token", "/", "/index.html")).addPathPatterns("/**");
+        registry.addInterceptor(new LoginInterceptor("./html/signin.html", "token")).addPathPatterns("/**");
     }
 
     @Override

@@ -1,4 +1,5 @@
-checkSignin()
+let uid = checkSignin()
+let tid = getCookieAndClear('tid', '/')
 // 开始加载
 Vue.use(httpVueLoader); // 使用httpVueLoader
 Vue.component('web-socket', "url:../vue/webSocket.vue")
@@ -6,6 +7,7 @@ Vue.component('web-socket', "url:../vue/webSocket.vue")
 let app = new Vue({
     el: '#app',
     data: {
+        tid:'',
         ws: {
             path: '/webssh',
             instance: null
@@ -27,7 +29,10 @@ let app = new Vue({
         term: null
     },
     created() {
-        this.initTerm()
+        this.tid = tid
+        if(tid){
+            this.initTerm()
+        }
     },
     methods: {
         initTerm() {
@@ -50,7 +55,7 @@ let app = new Vue({
             let msg = {
                 "messageType": MESSAGE_TYPE.CLIENT,
                 "info": {"from": "", "to": "", "desc": "初始化"},
-                "content": getCookie('token')
+                "content": this.tid
             }
             event.target.send(JSON.stringify(msg))
         },
