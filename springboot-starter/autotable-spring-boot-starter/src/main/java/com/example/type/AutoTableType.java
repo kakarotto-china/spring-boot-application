@@ -4,7 +4,7 @@ import com.example.enums.AtType;
 import com.example.model.ColumnInfo;
 import com.example.model.PrimaryKey;
 import com.example.model.TableInfo;
-import com.example.properties.DDLAction;
+import com.example.ddl.DDLAction;
 import com.example.util.SqlUtil;
 
 import java.sql.SQLException;

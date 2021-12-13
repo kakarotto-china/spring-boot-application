@@ -8,15 +8,13 @@ import com.example.model.AtField;
 import com.example.model.ColumnInfo;
 import com.example.model.PrimaryKey;
 import com.example.model.TableInfo;
-import com.example.properties.AutoTableProperties;
+import com.example.core.AutoTableContext;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -24,7 +22,6 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
-import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -115,7 +112,7 @@ public class PackageScanUtil {
     }
 
     public static List<TableInfo> scannerEntities(ProductType type, List<Class<?>> tableClasses,
-        AutoTableProperties properties) {
+        AutoTableContext properties) {
         List<TableInfo> tables = new ArrayList<>(10);
         log.info("正在扫描实体...");
         TableInfo table;

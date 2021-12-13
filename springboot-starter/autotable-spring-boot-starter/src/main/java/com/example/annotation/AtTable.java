@@ -44,5 +44,4 @@ public @interface AtTable {
 	 * @return 注释
 	 */
 	String comment() default "";
-
 }

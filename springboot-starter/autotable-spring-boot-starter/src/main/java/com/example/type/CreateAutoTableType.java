@@ -3,7 +3,7 @@ package com.example.type;
 import com.example.enums.AtType;
 import com.example.model.ColumnInfo;
 import com.example.model.TableInfo;
-import com.example.properties.DDLAction;
+import com.example.ddl.DDLAction;
 import com.example.util.DataBaseUtil;
 
 import cn.hutool.core.collection.CollUtil;

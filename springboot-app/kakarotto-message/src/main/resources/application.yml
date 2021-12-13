@@ -2,19 +2,10 @@ server:
   port: 5555
 spring:
   profiles:
-    active: mysql
+    active: dev
 
 mybatis:
   config-location: classpath:config/mybatis-config.xml
-
-auto-table:
-  catalog: kakarotto-message #表类型
-  type: create #运行模式
-  java-types: #在@Column注解中type属性留空时,会自动根据当前属性的java类型,进行映射,以下是映射规则
-    com.myyf.message.constant.Gender: varchar
-    java.io.Serializable: varchar
-    java.lang.Object: varchar
-  base-bean-packages: com.myyf.message.domian
 
 logging:
   level:

@@ -23,14 +23,8 @@ public class ReflectUtil extends cn.hutool.core.util.ReflectUtil {
     public static List<AtField> getAtFields(@NonNull Class<?> type) {
         List<AtField> list = new ArrayList<>(10);
         // 获得当前类的所有属性
-        for (Field field : getFields(type)) {
+        for (Field field : getFields(type)) { // 此方法会获取父类字段
             list.add(new AtField(type, field));
-        }
-        // 获得父类
-        Class<?> superclass = type.getSuperclass();
-        if (superclass != null) {
-            // 递归获取父类的属性列表
-            list.addAll(getAtFields(superclass));
         }
         return list;
     }

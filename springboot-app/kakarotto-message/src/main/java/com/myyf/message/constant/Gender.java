@@ -1,6 +1,6 @@
 package com.myyf.message.constant;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.IEnum;
 import com.example.enums.AtEnum;
 import lombok.AllArgsConstructor;
 import lombok.ToString;

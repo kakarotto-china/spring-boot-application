@@ -10,13 +10,11 @@ import com.myyf.message.constant.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
 @AtTable(name = "tbl_user_info", comment = "用户表")
 @TableName("tbl_user_info")
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserInfo extends OperatorModel<UserInfo, String, Date> {
+public class UserInfo extends OperatorModel<UserInfo> {
     @TableId(value = "id", type = IdType.AUTO)
     @AtColumn(name = "id", length = 64, primaryKey = true, autoincrement = true, comment = "用户id")
     private Integer id;

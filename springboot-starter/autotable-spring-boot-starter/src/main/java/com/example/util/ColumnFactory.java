@@ -9,8 +9,8 @@ import com.example.enums.ProductType;
 import com.example.exception.AutoTableException;
 import com.example.model.AtField;
 import com.example.model.ColumnInfo;
-import com.example.properties.AutoTableProperties;
 
+import com.example.properties.AutoTableProperties;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ClassUtils;

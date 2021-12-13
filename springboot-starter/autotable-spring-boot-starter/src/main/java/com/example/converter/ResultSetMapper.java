@@ -26,6 +26,7 @@ public class ResultSetMapper {
                 String columnName = annotation.name();
                 Object value = resultSet.getObject(columnName);
                 if (annotation.converter() == Converter.class) {
+                    // 默认值则不转换处理
                     ReflectUtil.setAtFieldValue(field, t, value);
                 } else {
                     Converter<?> converter = annotation.converter().newInstance();

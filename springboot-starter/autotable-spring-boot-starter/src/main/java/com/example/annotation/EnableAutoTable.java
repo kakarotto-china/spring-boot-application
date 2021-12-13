@@ -25,5 +25,5 @@ public @interface EnableAutoTable {
 
     AtType type() default AtType.NONE;
 
-    String[] baseBeanScan() default {};
+    String[] baseAnnotationScan() default {};
 }
