@@ -1,15 +1,10 @@
 package com.myyf.webssh.ws;
 
-import cn.hutool.core.map.MapUtil;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.websocket.WsSession;
-import org.springframework.web.socket.TextMessage;
 
-import javax.websocket.*;
+import javax.websocket.OnMessage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Map;
 
 @Slf4j
 public abstract class AbstractWsByteServer  extends AbstractWsServer{

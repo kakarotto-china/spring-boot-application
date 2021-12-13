@@ -10,9 +10,15 @@ import com.myyf.webssh.entity.convert.UserSSHConvert;
 import lombok.Data;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * 表t_user_ssh实体
+ */
 @Data
 @TableName("t_user_ssh")
 public class UserSSH extends Model<UserSSH> {
+    /**
+     * 转换器
+     */
     public static final UserSSHConvert CONVERT = Mappers.getMapper(UserSSHConvert.class);
 
     @TableId(value = "id", type = IdType.AUTO)

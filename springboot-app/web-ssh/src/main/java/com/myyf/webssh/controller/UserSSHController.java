@@ -1,7 +1,7 @@
 package com.myyf.webssh.controller;
 
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.interception.LoginIgnore;
+import com.myyf.webssh.interceptor.LoginIgnore;
 import com.myyf.webssh.service.UserSSHService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
 package com.myyf.webssh;
 
-import com.myyf.webssh.interception.LoginInterceptor;
+import com.myyf.webssh.interceptor.LoginInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +27,7 @@ public class WebSHHApplication implements WebMvcConfigurer, ApplicationContextAw
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor("./html/signin.html", "token")).addPathPatterns("/**");
+        registry.addInterceptor(new LoginInterceptor("token")).addPathPatterns("/**");
     }
 
     @Override

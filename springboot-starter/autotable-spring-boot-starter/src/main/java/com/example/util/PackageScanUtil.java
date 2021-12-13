@@ -8,10 +8,10 @@ import com.example.model.AtField;
 import com.example.model.ColumnInfo;
 import com.example.model.PrimaryKey;
 import com.example.model.TableInfo;
-import com.example.core.AutoTableContext;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
+import com.example.properties.AutoTableProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -85,10 +85,10 @@ public class PackageScanUtil {
     /**
      * 根据注解扫描类
      *
-     * @param packageName 包名
+     * @param packageName    包名
      * @param annotationType 注解
      * @return 类集合
-     * @throws IOException IO异常
+     * @throws IOException            IO异常
      * @throws ClassNotFoundException 类找不到异常
      */
     public static List<Class<?>> scannerByAnnotation(String packageName, Class<? extends Annotation> annotationType)
@@ -111,8 +111,7 @@ public class PackageScanUtil {
         return list;
     }
 
-    public static List<TableInfo> scannerEntities(ProductType type, List<Class<?>> tableClasses,
-        AutoTableContext properties) {
+    public static List<TableInfo> scannerEntities(ProductType type, List<Class<?>> tableClasses, AutoTableProperties properties) {
         List<TableInfo> tables = new ArrayList<>(10);
         log.info("正在扫描实体...");
         TableInfo table;
@@ -158,7 +157,7 @@ public class PackageScanUtil {
                 }
             }
             log.info("类名:{}  表名:{} 字段数:{} 主键数:{}", clazz.getName(), table.getTableName(), columns.size(),
-                primaryKeys.size());
+                    primaryKeys.size());
             tables.add(table);
         }
         return tables;

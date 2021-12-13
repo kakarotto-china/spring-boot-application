@@ -2,6 +2,9 @@ package com.myyf.webssh.entity.vo;
 
 import lombok.Data;
 
+/**
+ * 用户ssh基本信息
+ */
 @Data
 public class UserSSHVo {
     private Long id;

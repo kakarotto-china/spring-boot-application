@@ -1,7 +1,10 @@
-package com.myyf.webssh.interception;
+package com.myyf.webssh.interceptor;
 
 import java.lang.annotation.*;
 
+/**
+ * 登录过滤
+ */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

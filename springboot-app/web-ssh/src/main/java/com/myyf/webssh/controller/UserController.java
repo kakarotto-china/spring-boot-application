@@ -6,11 +6,10 @@ import com.myyf.webssh.entity.dto.UserSigninDto;
 import com.myyf.webssh.entity.dto.UserSignupDto;
 import com.myyf.webssh.exception.LoginException;
 import com.myyf.webssh.exception.VerifyException;
-import com.myyf.webssh.interception.LoginIgnore;
+import com.myyf.webssh.interceptor.LoginIgnore;
 import com.myyf.webssh.service.UserService;
 import com.myyf.webssh.util.JWTUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -22,13 +22,13 @@ public class ExceptionResolver {
      */
     @ExceptionHandler(Exception.class)
     public Result<?> exception(Exception e) {
-        log.error("[ExceptionHandler]", e);
+        log.error("[Exception]", e);
         return Result.fail(e.toString());
     }
 
     @ExceptionHandler(ServiceRuntimeException.class)
     public Result<?> serviceRuntimeException(ServiceRuntimeException e) {
-        log.error("[ExceptionHandler]", e);
+        log.error("[ServiceRuntimeException]", e);
         return Result.fail(e.codeEnum);
     }
 

@@ -39,7 +39,6 @@ public interface SSHService {
      * @param channel channel
      * @param input input
      */
-    //    void execTerminal(Channel channel, byte[] input);
     void execTerminal(Channel channel, String input);
 
     /**

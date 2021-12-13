@@ -17,7 +17,7 @@ let app = new Vue({
 
     },
     created() {
-        this.jump = checkJump()
+        this.jump = checkAndClearJump()
         switch (this.jump) {
             case JUMP_TYPE.SIGN_UP:
                 this.delayedJump('跳转中...', '注册', './signin.html', '登录页', 3)
@@ -42,7 +42,6 @@ let app = new Vue({
             let interval = setInterval(() => {
                 if (this.delayed.second <= 0) {
                     clearInterval(interval)
-                    clearCookie('jump')
                     window.location.href = this.delayed.page
                     return
                 }
@@ -54,7 +53,7 @@ let app = new Vue({
             this.verify.opt = opt
             this.verify.page = page
             this.verify.pageName = pageName
-            let signupInfo = JSON.parse(getCookie('temp'))
+            let signupInfo = JSON.parse(getCookieAndClear('temp'))
             this.verify.email = signupInfo.email
             let timer = 0
             let interval = setInterval(() => {
@@ -64,8 +63,6 @@ let app = new Vue({
                     let body = success.body
                     if(body.code === 2000 && body.data){ // 验证成功
                         clearInterval(interval)
-                        clearCookie('temp')
-                        clearCookie('jump')
                         window.location.href = this.verify.page
                         return
                     }
@@ -77,8 +74,6 @@ let app = new Vue({
                 if(timer >= 1800){
                     alert("验证时间大于30分钟，已失效，请重新注册")
                     clearInterval(interval)
-                    clearCookie('temp')
-                    clearCookie('jump')
                     window.location.href = './signup.html'
                 }
             }, 1000)

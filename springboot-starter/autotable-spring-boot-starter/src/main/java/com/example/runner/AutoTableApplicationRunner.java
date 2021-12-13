@@ -9,8 +9,8 @@ import com.example.listener.event.AutoTableInitEvent;
 import com.example.listener.event.AutoTableStep1Event;
 import com.example.listener.event.AutoTableStep3Event;
 import com.example.model.TableInfo;
-import com.example.core.AutoTableContext;
-import com.example.ddl.DDLAction;
+import com.example.properties.AutoTableProperties;
+import com.example.properties.DDLAction;
 import com.example.type.AutoTableType;
 import com.example.util.PackageScanUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +34,13 @@ import java.util.List;
 @Component
 @Slf4j
 public class AutoTableApplicationRunner implements ApplicationRunner {
-    private final AutoTableContext properties;
+    private final AutoTableProperties properties;
 
     private final DataSource dataSource;
 
     private final ApplicationContext applicationContext;
 
-    public AutoTableApplicationRunner(AutoTableContext properties, DataSource dataSource,
+    public AutoTableApplicationRunner(AutoTableProperties properties, DataSource dataSource,
                                       ApplicationContext applicationContext) {
         this.properties = properties;
         this.dataSource = dataSource;
@@ -70,7 +70,7 @@ public class AutoTableApplicationRunner implements ApplicationRunner {
             applicationContext.publishEvent("检查基本参数");
 
             // 获取需要创建表的实体对象
-            List<Class<?>> tableClasses = PackageScanUtil.scannerByAnnotation(properties.getAnnotationPackages(), AtTable.class);
+            List<Class<?>> tableClasses = PackageScanUtil.scannerByAnnotation(properties.getBaseBeanPackages(), AtTable.class);
             ProductType productType = properties.getProductType();
             // 扫描实体
             List<TableInfo> tables = PackageScanUtil.scannerEntities(productType, tableClasses, properties);

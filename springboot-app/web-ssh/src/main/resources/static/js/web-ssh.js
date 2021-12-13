@@ -1,13 +1,14 @@
 let uid = checkSignin()
-let tid = getCookieAndClear('tid', '/')
+let tid = getCookieAndClear('tid')
 // 开始加载
 Vue.use(httpVueLoader); // 使用httpVueLoader
 Vue.component('web-socket', "url:../vue/webSocket.vue")
+Vue.component('web-ssh', "url:../vue/webSHH.vue")
 
 let app = new Vue({
     el: '#app',
     data: {
-        tid:'',
+        tid: '',
         ws: {
             path: '/webssh',
             instance: null
@@ -30,27 +31,8 @@ let app = new Vue({
     },
     created() {
         this.tid = tid
-        if(tid){
-            this.initTerm()
-        }
     },
     methods: {
-        initTerm() {
-            this.term = new Terminal(this.terminalConfig);
-            this.term.on('data', (data) => {
-                // 键盘输入时的回调函数
-                console.log(data)
-                let msg = {
-                    "messageType": MESSAGE_TYPE.CLIENT,
-                    "info": {"from": "", "to": "", "desc": "命令"},
-                    "content": data
-                }
-                this.ws.instance.send(JSON.stringify(msg))
-            });
-            this.term.open(); // 参数1，指定显示的dom元素，可为空
-            //在页面上显示连接中...
-            this.term.write('Connecting...');
-        },
         wsopen(event) {
             let msg = {
                 "messageType": MESSAGE_TYPE.CLIENT,
@@ -74,6 +56,18 @@ let app = new Vue({
         },
         wsconnect(newValue) {
             this.ws.instance = newValue;
+        },
+        terminit(newValue, oldValue) {
+            this.term = newValue
+        },
+        termdata(data) {
+            let msg = {
+                "messageType": MESSAGE_TYPE.CLIENT,
+                "info": {"from": "", "to": "", "desc": "命令"},
+                "content": data
+            }
+            this.ws.instance.send(JSON.stringify(msg))
         }
+
     }
 });

@@ -24,7 +24,7 @@ let app = new Vue({
             })
         },
         openTerminal(id) {
-            setCookie('tid', id, 1)
+            setCookie('tid', id, 1, '/html')
             window.location.href = `./html/webssh.html`
         },
         signout() {

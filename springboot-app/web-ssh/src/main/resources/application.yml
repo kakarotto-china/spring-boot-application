@@ -2,7 +2,7 @@ server:
   port: 5555
 spring:
   profiles:
-    active: dev
+    active: mysql
   mail:
     host: smtp.qq.com # 配置 SMTP 服务器地址
     username: 524519972@qq.com # 发送者邮箱

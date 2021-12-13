@@ -66,8 +66,8 @@ const checkSignin = () => {
     }
 }
 
-const checkJump = () => {
-    let jump = parseInt(getCookie('jump'))
+const checkAndClearJump = () => {
+    let jump = parseInt(getCookieAndClear('jump'))
     for (k in JUMP_TYPE) {
         if (jump === JUMP_TYPE[k]) {
             return jump

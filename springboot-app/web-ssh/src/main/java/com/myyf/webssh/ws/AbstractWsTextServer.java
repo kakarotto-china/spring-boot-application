@@ -3,7 +3,8 @@ package com.myyf.webssh.ws;
 import com.myyf.webssh.ws.config.WsTextMessage;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.websocket.*;
+import javax.websocket.EncodeException;
+import javax.websocket.OnMessage;
 import java.io.IOException;
 
 /**

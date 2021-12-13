@@ -14,9 +14,17 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * jwt工具
+ */
 public class JWTUtils {
     private static final String KEY = "SDDF25FG$%6HJK88@34467;KK!E547";
 
+    /**
+     * 生产jwt token
+     * @param user user
+     * @return String
+     */
     public static String generateToken(User user) {
         if (user == null) {
             throw new LoginException(Result.CodeEnum.LOGIN_FAIL);
@@ -34,6 +42,12 @@ public class JWTUtils {
                 .sign(Algorithm.HMAC256(KEY));//设置签名 密钥
     }
 
+    /**
+     * 验证并获取user
+     *
+     * @param token token
+     * @return Optional<User>
+     */
     public static Optional<User> verify(String token) {
         if (token == null) {
             return Optional.empty();

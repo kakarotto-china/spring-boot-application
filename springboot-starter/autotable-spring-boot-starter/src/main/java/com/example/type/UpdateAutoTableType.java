@@ -1,15 +1,13 @@
 package com.example.type;
 
+import cn.hutool.core.collection.CollUtil;
 import com.example.enums.AtType;
 import com.example.model.ColumnInfo;
 import com.example.model.PrimaryKey;
 import com.example.model.TableInfo;
-import com.example.ddl.DDLAction;
+import com.example.properties.DDLAction;
 import com.example.util.DataBaseUtil;
-
-import cn.hutool.core.collection.CollUtil;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 
 /**
  * update模式
- *
  */
 @Component
 @Slf4j
@@ -93,8 +90,8 @@ public class UpdateAutoTableType implements AutoTableType {
         primaryKeys.forEach(pk -> pkNames.add(pk.getColumnName().toLowerCase()));
         // 过滤表中已存在的主键,如果最后集合大小为0,则说明主键未更改,否则说明主键列表不一致,需要重新创建主键
         List<PrimaryKey> list = pkOlds.stream()
-            .filter(pk -> !pkNames.contains(pk.getColumnName().toLowerCase()))
-            .collect(Collectors.toList());
+                .filter(pk -> !pkNames.contains(pk.getColumnName().toLowerCase()))
+                .collect(Collectors.toList());
         return !list.isEmpty();
     }
 
