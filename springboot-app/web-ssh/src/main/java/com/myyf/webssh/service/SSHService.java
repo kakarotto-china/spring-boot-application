@@ -2,7 +2,7 @@ package com.myyf.webssh.service;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.Session;
-import com.myyf.webssh.entity.SSHConnectionInfo;
+import com.myyf.webssh.ws.server.SSHConnectionInfo;
 
 import java.util.function.Consumer;
 

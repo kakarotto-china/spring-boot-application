@@ -1,43 +1,46 @@
-let uid = checkSignin()
-let tid = getCookieAndClear('tid')
+let uid = checkSignin('../html/signin.html')
+let userSSH = getCookieAndClear('user_ssh')
+
 // 开始加载
 Vue.use(httpVueLoader); // 使用httpVueLoader
 Vue.component('web-socket', "url:../vue/webSocket.vue")
-Vue.component('web-ssh', "url:../vue/webSHH.vue")
+Vue.component('terminal', "url:../vue/terminal.vue")
 
 let app = new Vue({
     el: '#app',
     data: {
-        tid: '',
+        userSSH: {},
         ws: {
             path: '/webssh',
             instance: null
         },
-        connectInfo: {
-            name: '',
-            host: ''
-        },
         online: 0,
-        terminalConfig: {
-            cols: 97,
-            rows: 37,
-            cursorBlink: true, // 光标闪烁
-            cursorStyle: "block", // 光标样式  null | 'block' | 'underline' | 'bar'
-            scrollback: 800, // 回滚
-            tabStopWidth: 8, // 制表宽度
-            screenKeys: true
-        },
-        term: null
+        term: {
+            config: {
+                // cols: 97,
+                // rows: 37,
+                // scrollback: 800, // 回滚
+                // tabStopWidth: 8, // 制表宽度
+                screenKeys: true,
+                cursorBlink: true, // 光标闪烁
+                cursorStyle: "block", // 光标样式  null | 'block' | 'underline' | 'bar'
+                fontFamily: '"Cascadia Code", Menlo, monospace',
+                theme: TERMINAL_BASE_THEME
+            },
+            instances: null
+        }
     },
     created() {
-        this.tid = tid
+        if(userSSH){
+            this.userSSH = JSON.parse(userSSH)
+        }
     },
     methods: {
         wsopen(event) {
             let msg = {
                 "messageType": MESSAGE_TYPE.CLIENT,
                 "info": {"from": "", "to": "", "desc": "初始化"},
-                "content": this.tid
+                "content": this.userSSH.id
             }
             event.target.send(JSON.stringify(msg))
         },
@@ -48,7 +51,7 @@ let app = new Vue({
                 if (data.info.desc === '在线数') {
                     this.online = data.content
                 } else if (data.info.desc === '终端') {
-                    this.term.write(data.content);
+                    this.term.instances.write(data.content);
                 }
             } else {
                 alert('未实现的操作' + data.messageType)
@@ -57,10 +60,11 @@ let app = new Vue({
         wsconnect(newValue) {
             this.ws.instance = newValue;
         },
-        terminit(newValue, oldValue) {
-            this.term = newValue
+        oninit(newValue, oldValue) {
+            this.term.instances = newValue
+            this.term.instances.write('连接中...\r\n')
         },
-        termdata(data) {
+        ondata(data) {
             let msg = {
                 "messageType": MESSAGE_TYPE.CLIENT,
                 "info": {"from": "", "to": "", "desc": "命令"},
@@ -68,6 +72,5 @@ let app = new Vue({
             }
             this.ws.instance.send(JSON.stringify(msg))
         }
-
     }
 });

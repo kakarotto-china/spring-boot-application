@@ -43,7 +43,7 @@ const getCookieAndClear = (cname, clearPath) => {
     return sshId
 }
 
-const checkSignin = () => {
+const checkSignin = (redrict) => {
     let request = new XMLHttpRequest()
     request.open('GET', '../user/signin-check', false) // 第三个参数 false 代表设置同步请求
     request.setRequestHeader('Accept', 'application/json');
@@ -52,7 +52,7 @@ const checkSignin = () => {
     request.send()
     switch (request.status){
         case 401:
-            window.location.href = './html/signin.html'
+            window.location.href = redrict
             break
         case 200:
             let body = JSON.parse(request.response)
@@ -75,3 +75,26 @@ const checkAndClearJump = () => {
     }
     return NaN
 }
+
+
+const TERMINAL_BASE_THEME = {
+    foreground: '#F8F8F8',
+    background: '#2D2E2C',
+    selection: '#5DA5D533',
+    black: '#1E1E1D',
+    brightBlack: '#262625',
+    red: '#CE5C5C',
+    brightRed: '#FF7272',
+    green: '#5BCC5B',
+    brightGreen: '#72FF72',
+    yellow: '#CCCC5B',
+    brightYellow: '#FFFF72',
+    blue: '#5D5DD3',
+    brightBlue: '#7279FF',
+    magenta: '#BC5ED1',
+    brightMagenta: '#E572FF',
+    cyan: '#5DA5D5',
+    brightCyan: '#72F0FF',
+    white: '#F8F8F8',
+    brightWhite: '#FFFFFF'
+};

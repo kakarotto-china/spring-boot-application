@@ -4,7 +4,6 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebSHHApplication;
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.entity.SSHConnectionInfo;
 import com.myyf.webssh.entity.UserSSH;
 import com.myyf.webssh.exception.UnSupportedOperationException;
 import com.myyf.webssh.mapper.UserSSHMapper;
@@ -78,6 +77,8 @@ public class WebSHHWsTextServer extends AbstractWsTextServer {
         channel = sshService.connectChannel(session, sshConnectionInfo);
         sshService.consumerTerminal(channel, bytesConsumer);
 //        sshService.execTerminal(channel, "\r"); // 获取终端输入的前缀，模拟终端按下回车键
+
+        sendAsync("", "连接信息");
     }
 
     private void dealCmd(String content) {

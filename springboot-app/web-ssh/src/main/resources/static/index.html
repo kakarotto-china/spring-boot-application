@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Terminal</title>
-    <link rel="stylesheet" href="plugin/css/element.css"/>
-    <script src="plugin/js/vue.min.js"></script>
-    <script src="plugin/js/element.js"></script>
-    <script src="plugin/js/vue-resource.min.js"></script>
+    <link rel="stylesheet" href="plugin/elementui/element.css"/>
+    <script src="plugin/vue/vue.min.js"></script>
+    <script src="plugin/elementui/element.js"></script>
+    <script src="plugin/vue/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app">
-    <el-button type="primary" @click="openTerminal()">打开终端</el-button>
     <el-button @click="signout()">退出</el-button>
-    <el-button type="text" v-for="userSSH in userSSHList" @click="openTerminal(userSSH.id)">{{userSSH.name}}</el-button>
+    <el-button type="text" v-for="userSSH in userSSHList" @click="openTerminal(userSSH)">{{userSSH.name}}</el-button>
 </div>
 <script src="js/common.js" charset="utf-8"></script>
 <script src="js/index.js" charset="utf-8"></script>

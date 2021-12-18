@@ -1,4 +1,4 @@
-let uid = checkSignin()
+let uid = checkSignin('./html/signin.html')
 
 let app = new Vue({
     el: '#app',
@@ -23,9 +23,9 @@ let app = new Vue({
                 console.error(fail)
             })
         },
-        openTerminal(id) {
-            setCookie('tid', id, 1, '/html')
-            window.location.href = `./html/webssh.html`
+        openTerminal(userSSH) {
+            setCookie('user_ssh', JSON.stringify(userSSH), 1, '/html')
+            window.location.href = `./html/terminal.html`
         },
         signout() {
             clearCookie('token')

@@ -3,7 +3,7 @@ package com.myyf.webssh.service.impl;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.myyf.webssh.entity.SSHConnectionInfo;
+import com.myyf.webssh.ws.server.SSHConnectionInfo;
 import com.myyf.webssh.service.SSHService;
 import com.myyf.webssh.async.AsyncExecutor;
 import lombok.SneakyThrows;

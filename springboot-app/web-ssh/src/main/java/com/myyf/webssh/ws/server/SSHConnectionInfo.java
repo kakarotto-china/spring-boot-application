@@ -1,4 +1,4 @@
-package com.myyf.webssh.entity;
+package com.myyf.webssh.ws.server;
 
 import lombok.Data;
 

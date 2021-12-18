@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terminal</title>
+    <link rel="stylesheet" href="../plugin/elementui/element.css"/>
+    <script src="../plugin/vue/vue.min.js"></script>
+    <script src="../plugin/vue/httpVueLoader.js"></script>
+    <script src="../plugin/elementui/element.js"></script>
+    <!-- xterm -->
+    <link rel="stylesheet" href="../plugin/xterm/css/xterm@4.15.0.css"/>
+    <script src="../plugin/xterm/js/xterm@4.15.0.js" charset="utf-8"></script>
+    <script src="../plugin/xterm/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>
+    <script src="../plugin/xterm/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>
+    <script src="../plugin/xterm/js/xterm-addon-fit@0.5.0.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+    {{ userSSH.user}}@{{ userSSH.host }}-online:{{online}}
+    <div v-if="userSSH.id" class="terminal">
+        <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
+                    @onconect="wsconnect"></web-socket>
+        <terminal :config="term.config" @oninit="oninit" @ondata="ondata"></terminal>
+    </div>
+    <div v-else>
+        资源访问错误：{{userSSH.id}}
+        <a href="../index.html">返回上层目录</a>
+    </div>
+</div>
+<script src="../js/common.js" charset="utf-8"></script>
+<script src="../js/terminal.js" charset="utf-8"></script>
+</body>
+</html>
