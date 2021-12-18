@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
+import java.util.function.Consumer;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,16 +36,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final UserSSHMapper userSSHMapper;
-
     private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
-    private String adminEmail;
-
-    public UserServiceImpl(UserMapper userMapper, UserSSHMapper userSSHMapper, JavaMailSender javaMailSender) {
+    public UserServiceImpl(UserMapper userMapper, JavaMailSender javaMailSender) {
         this.userMapper = userMapper;
-        this.userSSHMapper = userSSHMapper;
         this.javaMailSender = javaMailSender;
     }
 
@@ -97,31 +92,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean verifyConsumer(String verifyNums, String email) {
+    public void verifyConsumer(String verifyNums, String email, Consumer<User> consumer) {
         String verify = VERIFY_CODE.get(email);
         if(verify == null){
             throw new VerifyException(Result.CodeEnum.VERIFY_EXPIRED);
         }
         if (!StrUtil.equals(verify, verifyNums)) {
-            return false;
+            throw new VerifyException(Result.CodeEnum.VERIFY_FAIL);
         }
         UserSignupDto userSignupDto = SIGN_UP_INFO.get(email);
         User user = User.CONVERT.toUser(userSignupDto);
         // 新增用户
         user.insert();
-        if(StrUtil.equals(adminEmail, email)){
-            // 自动绑定localhost账户
-            UserSSH userSSH = new UserSSH();
-            userSSH.setUser("ubuntu");
-            userSSH.setHost("192.168.1.2");
-            userSSH.setPort(22);
-            userSSH.setName("server");
-            userSSH.setPasswd("yuehao12#$");
-            userSSH.setUid(user.getId());
-            userSSH.insert();
-        }
+        // 自动绑定
+        consumer.accept(user);
         VERIFY_CODE.put(email, "consumed");
-        return true;
     }
 
     @Override

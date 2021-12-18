@@ -1,7 +1,10 @@
 package com.myyf.webssh.service;
 
+import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.dto.UserSigninDto;
 import com.myyf.webssh.entity.dto.UserSignupDto;
+
+import java.util.function.Consumer;
 
 /**
  * UserService
@@ -36,9 +39,9 @@ public interface UserService {
      *
      * @param verifyNums verifyNums
      * @param email email
-     * @return boolean
+     * @param consumer consumer
      */
-    boolean verifyConsumer(String verifyNums, String email);
+    void verifyConsumer(String verifyNums, String email, Consumer<User> consumer);
 
     /**
      * 检查是否消费

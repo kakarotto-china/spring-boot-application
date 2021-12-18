@@ -54,7 +54,8 @@ public class Result<D> {
         UN_LOGIN(5012, International.of("未登录", "not logged in")),
         UN_SUPPORTED(5021, International.of("不支持的操作", "unsupported operation")),
         SEND_EMAIL_FAIL(5031, International.of("发送邮件失败", "send email failed")),
-        VERIFY_EXPIRED(5041, International.of("验证过期", "verify expired"));
+        VERIFY_EXPIRED(5041, International.of("验证过期", "verify expired")),
+        VERIFY_FAIL(5042, International.of("验证失败", "verify failed"));
 
         public final int code;
         public final International info;

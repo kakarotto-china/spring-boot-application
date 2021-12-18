@@ -7,8 +7,10 @@ import com.myyf.webssh.entity.dto.UserSignupDto;
 import com.myyf.webssh.exception.LoginException;
 import com.myyf.webssh.exception.VerifyException;
 import com.myyf.webssh.interceptor.LoginIgnore;
+import com.myyf.webssh.service.UserSSHService;
 import com.myyf.webssh.service.UserService;
 import com.myyf.webssh.util.JWTUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final UserSSHService userSSHService;
+
+    public UserController(UserService userService, UserSSHService userSSHService) {
         this.userService = userService;
+        this.userSSHService = userSSHService;
     }
 
     @PostMapping("/signup")
@@ -44,13 +49,10 @@ public class UserController {
     @LoginIgnore
     public String verifyConsumer(@PathVariable("verify") String verifyNums, @RequestParam("email") String email) {
         try {
-            if (userService.verifyConsumer(verifyNums, email)) {
-                return "<h3>验证成功</h3>";
-            } else {
-                return "<h3>验证失败</h3>";
-            }
-        } catch (VerifyException e) {
-            return "<h3>" + e.codeEnum.info.getCn() + "</h3>";
+            userService.verifyConsumer(verifyNums, email, userSSHService::bindServerSSH);
+            return "<h3>验证成功</h3>";
+        } catch (VerifyException exc) {
+            return "<h3>" + exc.codeEnum.info.getCn() + "</h3>";
         }
     }
 
