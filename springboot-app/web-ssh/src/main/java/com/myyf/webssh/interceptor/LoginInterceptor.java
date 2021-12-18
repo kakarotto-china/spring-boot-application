@@ -3,7 +3,7 @@ package com.myyf.webssh.interceptor;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ClassUtil;
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.exception.LoginException;
+import com.myyf.webssh.common.exception.LoginException;
 import com.myyf.webssh.util.JWTUtils;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.method.HandlerMethod;

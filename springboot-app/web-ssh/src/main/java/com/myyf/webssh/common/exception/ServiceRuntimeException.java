@@ -1,4 +1,4 @@
-package com.myyf.webssh.exception;
+package com.myyf.webssh.common.exception;
 
 import com.myyf.webssh.common.Result;
 

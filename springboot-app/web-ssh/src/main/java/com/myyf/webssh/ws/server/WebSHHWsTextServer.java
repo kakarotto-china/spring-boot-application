@@ -5,7 +5,7 @@ import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebSHHApplication;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.UserSSH;
-import com.myyf.webssh.exception.UnSupportedOperationException;
+import com.myyf.webssh.common.exception.UnSupportedOperationException;
 import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.SSHService;
 import com.myyf.webssh.ws.AbstractWsTextServer;

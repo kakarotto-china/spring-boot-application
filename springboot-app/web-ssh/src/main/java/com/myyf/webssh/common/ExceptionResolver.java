@@ -1,7 +1,7 @@
 package com.myyf.webssh.common;
 
-import com.myyf.webssh.exception.LoginException;
-import com.myyf.webssh.exception.ServiceRuntimeException;
+import com.myyf.webssh.common.exception.LoginException;
+import com.myyf.webssh.common.exception.ServiceRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
