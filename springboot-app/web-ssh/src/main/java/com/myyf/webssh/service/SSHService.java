@@ -19,7 +19,7 @@ public interface SSHService {
     /**
      * 打开通道
      *
-     * @param session session
+     * @param session           session
      * @param sshConnectionInfo sshConnectionInfo
      * @return Channel
      */
@@ -28,7 +28,7 @@ public interface SSHService {
     /**
      * 循环消费通道流
      *
-     * @param channel channel
+     * @param channel  channel
      * @param consumer consumer
      */
     void consumerTerminal(Channel channel, Consumer<byte[]> consumer);
@@ -37,7 +37,7 @@ public interface SSHService {
      * 向通道发送消息
      *
      * @param channel channel
-     * @param input input
+     * @param input   input
      */
     void execTerminal(Channel channel, String input);
 
@@ -47,7 +47,7 @@ public interface SSHService {
      * @param session session
      * @param channel channel
      */
-    default void close(Session session, Channel channel){
+    default void close(Session session, Channel channel) {
         if (session != null) {
             session.disconnect();
         }

@@ -10,7 +10,6 @@ import com.myyf.webssh.interceptor.LoginIgnore;
 import com.myyf.webssh.service.UserSSHService;
 import com.myyf.webssh.service.UserService;
 import com.myyf.webssh.util.JWTUtils;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

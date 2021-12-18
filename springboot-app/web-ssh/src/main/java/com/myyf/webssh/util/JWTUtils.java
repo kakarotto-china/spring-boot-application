@@ -22,6 +22,7 @@ public class JWTUtils {
 
     /**
      * 生产jwt token
+     *
      * @param user user
      * @return String
      */
@@ -63,7 +64,7 @@ public class JWTUtils {
             user.setNickname(decodedJWT.getClaim("nickname").asString());
             user.setEmail(decodedJWT.getClaim("email").asString());
             return Optional.of(user);
-        }catch (JWTVerificationException e){
+        } catch (JWTVerificationException e) {
             throw new LoginException(Result.CodeEnum.UN_LOGIN);
         }
     }

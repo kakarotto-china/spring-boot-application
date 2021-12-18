@@ -41,7 +41,7 @@ public class WsMessage {
     }
 
     public static WsMessage from(String from) {
-       WsMessage wsTextMessage = new WsMessage();
+        WsMessage wsTextMessage = new WsMessage();
         wsTextMessage.setMessageType(MessageType.CLIENT);
         wsTextMessage.setInfo(Info.of(from, "", ""));
         return wsTextMessage;

@@ -119,7 +119,7 @@ public abstract class AbstractWsServer {
      *
      * @return 在线数
      */
-    public static int getOnline(){
+    public static int getOnline() {
         return onlineWsSession.size();
     }
 }

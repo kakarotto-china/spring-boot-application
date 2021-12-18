@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @Slf4j
-public abstract class AbstractWsByteServer  extends AbstractWsServer{
+public abstract class AbstractWsByteServer extends AbstractWsServer {
     protected AbstractWsByteServer(boolean showLog) {
         super(showLog);
     }
@@ -25,7 +25,7 @@ public abstract class AbstractWsByteServer  extends AbstractWsServer{
     /**
      * 处理字节消息
      *
-     * @param bytes
+     * @param bytes bytes
      */
     protected abstract void message(byte[] bytes);
 

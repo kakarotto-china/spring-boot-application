@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             // 资源
             return true;
         }
-       return methodHandler(request, response, handler);
+        return methodHandler(request, response, handler);
     }
 
     private boolean methodHandler(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {

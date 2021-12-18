@@ -15,7 +15,7 @@ public class AsyncExecutor {
     /**
      * 不关闭 循环读取流
      *
-     * @param in InputStream
+     * @param in       InputStream
      * @param consumer 处理读到的直字节的方法
      */
     @Async("inputStreamPipeline")

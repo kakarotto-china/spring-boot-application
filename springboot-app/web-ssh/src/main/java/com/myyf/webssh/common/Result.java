@@ -34,7 +34,7 @@ public class Result<D> {
         return result;
     }
 
-    public static  Result<?> fail(CodeEnum codeEnum) {
+    public static Result<?> fail(CodeEnum codeEnum) {
         Result<?> result = setResultCode(codeEnum);
         result.setData(null);
         return result;

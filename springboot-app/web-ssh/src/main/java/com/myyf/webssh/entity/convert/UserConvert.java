@@ -12,6 +12,7 @@ import org.mapstruct.Mapper;
 public interface UserConvert {
     /**
      * 转为User
+     *
      * @param userSignupDto userSignupDto
      * @return User
      */

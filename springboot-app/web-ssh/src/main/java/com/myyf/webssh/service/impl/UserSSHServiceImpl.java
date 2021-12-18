@@ -2,11 +2,9 @@ package com.myyf.webssh.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.UserSSH;
 import com.myyf.webssh.entity.vo.UserSSHVo;
-import com.myyf.webssh.exception.BindException;
 import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.UserSSHService;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,8 +34,8 @@ public class UserSSHServiceImpl implements UserSSHService {
 
     @Override
     public void bindServerSSH(User user) {
-        if(!StrUtil.equals(adminEmail, user.getEmail())){
-           return;
+        if (!StrUtil.equals(adminEmail, user.getEmail())) {
+            return;
         }
         // 绑定localhost账户
         UserSSH userSSH = new UserSSH();

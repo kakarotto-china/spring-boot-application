@@ -9,16 +9,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myyf.webssh.WebSHHApplication;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.User;
-import com.myyf.webssh.entity.UserSSH;
 import com.myyf.webssh.entity.dto.UserSigninDto;
 import com.myyf.webssh.entity.dto.UserSignupDto;
 import com.myyf.webssh.exception.EmailException;
 import com.myyf.webssh.exception.VerifyException;
 import com.myyf.webssh.mapper.UserMapper;
-import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.UserService;
 import com.myyf.webssh.util.JWTUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -31,8 +28,8 @@ import java.util.function.Consumer;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private static final Cache<String, String> VERIFY_CODE = new TimedCache<>(DateUnit.SECOND.getMillis()*1800);
-    private static final Cache<String, UserSignupDto> SIGN_UP_INFO = new TimedCache<>(DateUnit.SECOND.getMillis()*1800);
+    private static final Cache<String, String> VERIFY_CODE = new TimedCache<>(DateUnit.SECOND.getMillis() * 1800);
+    private static final Cache<String, UserSignupDto> SIGN_UP_INFO = new TimedCache<>(DateUnit.SECOND.getMillis() * 1800);
 
     private final UserMapper userMapper;
 
@@ -94,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void verifyConsumer(String verifyNums, String email, Consumer<User> consumer) {
         String verify = VERIFY_CODE.get(email);
-        if(verify == null){
+        if (verify == null) {
             throw new VerifyException(Result.CodeEnum.VERIFY_EXPIRED);
         }
         if (!StrUtil.equals(verify, verifyNums)) {

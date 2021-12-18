@@ -11,7 +11,7 @@ import java.io.IOException;
  * websocket定义了默认的会话管理
  */
 @Slf4j
-public abstract class AbstractWsTextServer extends AbstractWsServer{
+public abstract class AbstractWsTextServer extends AbstractWsServer {
     protected AbstractWsTextServer(boolean showLog) {
         super(showLog);
     }
@@ -36,7 +36,7 @@ public abstract class AbstractWsTextServer extends AbstractWsServer{
     /**
      * 异步发送方法
      *
-     * @param msg 消息
+     * @param msg  消息
      * @param desc 描述
      */
     protected void sendAsync(String msg, String desc) {
@@ -46,7 +46,7 @@ public abstract class AbstractWsTextServer extends AbstractWsServer{
     /**
      * 同步发送方法
      *
-     * @param msg 消息
+     * @param msg  消息
      * @param desc 描述
      */
     protected synchronized void send(String msg, String desc) {

@@ -38,8 +38,8 @@ public interface UserService {
      * 消费验证消息
      *
      * @param verifyNums verifyNums
-     * @param email email
-     * @param consumer consumer
+     * @param email      email
+     * @param consumer   consumer
      */
     void verifyConsumer(String verifyNums, String email, Consumer<User> consumer);
 
