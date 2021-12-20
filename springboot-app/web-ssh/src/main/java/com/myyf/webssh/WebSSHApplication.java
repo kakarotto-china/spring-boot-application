@@ -1,6 +1,10 @@
 package com.myyf.webssh;
 
+import com.myyf.webssh.common.Result;
+import com.myyf.webssh.common.exception.LoginException;
+import com.myyf.webssh.entity.User;
 import com.myyf.webssh.interceptor.LoginInterceptor;
+import com.myyf.webssh.util.JWTUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,11 +22,11 @@ import java.util.Objects;
 
 @SpringBootApplication
 @ServletComponentScan
-public class WebSHHApplication implements WebMvcConfigurer, ApplicationContextAware {
+public class WebSSHApplication implements WebMvcConfigurer, ApplicationContextAware {
     private static ApplicationContext CONTEXT;
 
     public static void main(String[] args) {
-        SpringApplication.run(WebSHHApplication.class, args);
+        SpringApplication.run(WebSSHApplication.class, args);
     }
 
     @Override
@@ -45,5 +49,10 @@ public class WebSHHApplication implements WebMvcConfigurer, ApplicationContextAw
 
     public static HttpServletResponse getResponse() {
         return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+    }
+
+    public static User getUser() {
+        String token = getRequest().getHeader("token");
+        return JWTUtils.verify(token).orElseThrow(() -> new LoginException(Result.CodeEnum.UN_LOGIN));
     }
 }

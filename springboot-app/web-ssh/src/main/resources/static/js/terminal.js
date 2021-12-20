@@ -33,6 +33,9 @@ let app = new Vue({
     created() {
         if(userSSH){
             this.userSSH = JSON.parse(userSSH)
+            document.title = `${this.userSSH.user}@${this.userSSH.host}`
+        }else{
+            document.title = '页面错误'
         }
     },
     methods: {

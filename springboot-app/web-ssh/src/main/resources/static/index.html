@@ -3,17 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Terminal</title>
-    <link rel="stylesheet" href="plugin/elementui/element.css"/>
-    <script src="plugin/vue/vue.min.js"></script>
-    <script src="plugin/elementui/element.js"></script>
-    <script src="plugin/vue/vue-resource.min.js"></script>
+    <link rel="stylesheet" href="./plugin/elementui/element.css"/>
+    <link rel="stylesheet" href="./css/index.css"/>
+    <script src="./plugin/vue/vue.min.js"></script>
+    <script src="./plugin/elementui/element.js"></script>
+    <script src="./plugin/vue/vue-resource.min.js"></script>
+    <script src="./plugin/vue/httpVueLoader.js"></script>
+    <!-- xterm -->
+    <link rel="stylesheet" href="./plugin/xterm/css/xterm@4.15.0.css"/>
+    <script src="./plugin/xterm/js/xterm@4.15.0.js" charset="utf-8"></script>
+    <script src="./plugin/xterm/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>
+    <script src="./plugin/xterm/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>
+    <script src="./plugin/xterm/js/xterm-addon-fit@0.5.0.js" charset="utf-8"></script>
 </head>
 <body>
 <div id="app">
-    <el-button @click="signout()">退出</el-button>
-    <el-button type="text" v-for="userSSH in userSSHList" @click="openTerminal(userSSH)">{{userSSH.name}}</el-button>
+    <new-user-ssh :visible="showNewUserSSH" @close="showNewUserSSH = false" @success="success"></new-user-ssh>
+
+    <el-container>
+        <el-header>
+            <el-button type="text" @click="showNewUserSSH = true">新增</el-button>
+            <el-button @click="signout()">退出</el-button>
+        </el-header>
+        <el-container>
+            <el-aside width="200px">
+                <div v-for="userSSH in userSSHList">
+                    <el-button type="text" @click="openTerminal(userSSH)">
+                        {{userSSH.name}}
+                    </el-button>
+                    <el-button type="text" @click="delUserSSH(userSSH)">删除</el-button>
+                </div>
+            </el-aside>
+            <el-main>
+                <terminals ref="terminals"></terminals>
+            </el-main>
+        </el-container>
+        <el-footer>Footer</el-footer>
+    </el-container>
 </div>
 <script src="js/common.js" charset="utf-8"></script>
+<script src="js/TerminalTab.js" charset="utf-8"></script>
 <script src="js/index.js" charset="utf-8"></script>
 </body>
 </html>

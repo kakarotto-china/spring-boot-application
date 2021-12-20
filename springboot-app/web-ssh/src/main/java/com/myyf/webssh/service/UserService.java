@@ -29,25 +29,25 @@ public interface UserService {
     /**
      * 生产验证消息
      *
-     * @param userSignupDto userSignupDto
+     * @param uid uid
      * @return boolean
      */
-    boolean verifyProducer(UserSignupDto userSignupDto);
+    boolean verifyProducer(long uid);
 
     /**
      * 消费验证消息
      *
-     * @param verifyNums verifyNums
-     * @param email      email
+     * @param uid uid
+     * @param verifyNums      verifyNums
      * @param consumer   consumer
      */
-    void verifyConsumer(String verifyNums, String email, Consumer<User> consumer);
+    void verifyConsumer(long uid, String verifyNums, Consumer<User> consumer);
 
     /**
      * 检查是否消费
      *
-     * @param email email
+     * @param uid uid
      * @return boolean
      */
-    boolean verifyCheck(String email);
+    boolean verifyCheck(long uid);
 }

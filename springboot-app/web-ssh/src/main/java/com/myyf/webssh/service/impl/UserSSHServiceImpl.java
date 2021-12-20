@@ -2,8 +2,10 @@ package com.myyf.webssh.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.myyf.webssh.WebSSHApplication;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.UserSSH;
+import com.myyf.webssh.entity.dto.UserSSHNewDto;
 import com.myyf.webssh.entity.vo.UserSSHVo;
 import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.UserSSHService;
@@ -46,5 +48,21 @@ public class UserSSHServiceImpl implements UserSSHService {
         userSSH.setPasswd("yuehao12#$");
         userSSH.setUid(user.getId());
         userSSH.insert();
+    }
+
+    @Override
+    public UserSSHVo add(UserSSHNewDto userSSHNewDto) {
+        UserSSH userSSH = UserSSH.CONVERT.toUserSSH(userSSHNewDto);
+        User user = WebSSHApplication.getUser();
+        userSSH.setUid(user.getId());
+        userSSH.insert();
+        return UserSSH.CONVERT.toUserSSHVo(userSSH);
+    }
+
+    @Override
+    public void delete(long id) {
+        UserSSH userSSH = new UserSSH();
+        userSSH.setId(id);
+        userSSH.deleteById();
     }
 }

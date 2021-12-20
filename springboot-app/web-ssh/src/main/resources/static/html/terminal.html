@@ -16,7 +16,6 @@
 </head>
 <body>
 <div id="app">
-    {{ userSSH.user}}@{{ userSSH.host }}-online:{{online}}
     <div v-if="userSSH.id" class="terminal">
         <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
                     @onconect="wsconnect"></web-socket>

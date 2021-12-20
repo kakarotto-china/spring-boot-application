@@ -1,6 +1,7 @@
 package com.myyf.webssh.service;
 
 import com.myyf.webssh.entity.User;
+import com.myyf.webssh.entity.dto.UserSSHNewDto;
 import com.myyf.webssh.entity.vo.UserSSHVo;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface UserSSHService {
      * @param user user
      */
     void bindServerSSH(User user);
+
+    UserSSHVo add(UserSSHNewDto userSSHNewDto);
+
+    void delete(long id);
 }

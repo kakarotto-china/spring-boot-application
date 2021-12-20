@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Sign In</title>
     <link rel="stylesheet" href="../plugin/elementui/element.css"/>
+    <link rel="stylesheet" href="../css/signin.css"/>
     <script src="../plugin/vue/vue.min.js"></script>
     <script src="../plugin/elementui/element.js"></script>
     <script src="../plugin/vue/httpVueLoader.js"></script>
@@ -11,24 +12,33 @@
 </head>
 <body>
 <div id="app">
-    <el-form :model="signinForm" status-icon :rules="rules" ref="signinForm" label-width="100px" class="signinForm">
-        <el-form-item label="用户名" prop="name">
-            <el-input v-model="signinForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="passwd">
-            <el-input type="password" v-model="signinForm.passwd"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="submit('signinForm')">登录</el-button>
-            <el-button @click="reset('signinForm')">重置</el-button>
-        </el-form-item>
-        <el-form-item label="登录状态">
-            7日内记住 <el-switch v-model="rememberme" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-        </el-form-item>
-        <el-form-item label="没有账号?">
-            <a href="./signup.html">开始注册</a>
-        </el-form-item>
-    </el-form>
+    <el-row type="flex" justify="center" class="title">
+        <el-col :span="4">Sign In</el-col>
+    </el-row>
+    <el-row type="flex" justify="center" class="form">
+        <el-col :span="4">
+            <el-form :model="signinForm" status-icon :rules="rules" ref="signinForm" label-width="100px"
+                     class="signinForm">
+                <el-form-item label="用户名" prop="name">
+                    <el-input size="small" style="width: 200px" v-model="signinForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="passwd">
+                    <el-input size="small" style="width: 200px" type="password" v-model="signinForm.passwd"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" @click="reset('signinForm')">重置</el-button>
+                    <el-button size="small" type="primary" @click="submit('signinForm')">登录</el-button>
+                </el-form-item>
+                <el-form-item label="登录状态">
+                    7日内记住
+                    <el-switch v-model="rememberme" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                </el-form-item>
+                <el-form-item label="没有账号?">
+                    <a href="./signup.html">开始注册</a>
+                </el-form-item>
+            </el-form>
+        </el-col>
+    </el-row>
 </div>
 </body>
 <script src="../js/common.js" charset="utf-8"></script>

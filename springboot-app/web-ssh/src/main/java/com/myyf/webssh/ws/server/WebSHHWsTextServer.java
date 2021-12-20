@@ -2,7 +2,7 @@ package com.myyf.webssh.ws.server;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.Session;
-import com.myyf.webssh.WebSHHApplication;
+import com.myyf.webssh.WebSSHApplication;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.UserSSH;
 import com.myyf.webssh.common.exception.UnSupportedOperationException;
@@ -38,7 +38,7 @@ public class WebSHHWsTextServer extends AbstractWsTextServer {
 
     public WebSHHWsTextServer() {
         super(true);
-        sshService = WebSHHApplication.getContext().getBean(SSHService.class);
+        sshService = WebSSHApplication.getContext().getBean(SSHService.class);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class WebSHHWsTextServer extends AbstractWsTextServer {
 
     private void init(String content) {
         long id = Long.parseLong(content);
-        UserSSHMapper userSSHMapper = WebSHHApplication.getContext().getBean(UserSSHMapper.class);
+        UserSSHMapper userSSHMapper = WebSSHApplication.getContext().getBean(UserSSHMapper.class);
         UserSSH userSSH = userSSHMapper.selectById(id);
         SSHConnectionInfo sshConnectionInfo = new SSHConnectionInfo();
         sshConnectionInfo.setHost(userSSH.getHost());

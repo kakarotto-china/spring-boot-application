@@ -1,0 +1,22 @@
+.el-header, .el-footer {
+    background-color: #F2F2F2;
+    color: #0E0E0E;
+    text-align: left;
+    line-height: 20px;
+    height: 20px;
+}
+
+.el-aside {
+    background-color: #FFFFFF;
+    color: #0E0E0E;
+    text-align: left;
+    line-height: 200px;
+    border-right: #F2F2F2 1px solid;
+}
+
+.el-main {
+    background-color: #FFFFFF;
+    color: #0E0E0E;
+    text-align: center;
+    line-height: 160px;
+}

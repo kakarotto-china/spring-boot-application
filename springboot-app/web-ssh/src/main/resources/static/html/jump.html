@@ -13,15 +13,20 @@
 <div id="app">
     <div v-if="jump">
         <div v-if="jump !== JUMP_TYPE.VERIFY">
-            {{this.delayed.opt}}，{{this.delayed.second}}秒后跳转到<a :href="this.delayed.page">{{this.delayed.pageName}}</a>
+            <el-result icon="success" :title="this.delayed.opt" :subTitle="this.delayed.second + '秒后跳转'">
+                <template slot="extra">
+                    <a :href="this.delayed.page">{{this.delayed.pageName}}</a>
+                </template>
+            </el-result>
         </div>
-        <div v-if="jump === JUMP_TYPE.VERIFY">
-            <div>需要进行邮件验证</div>
-            <div>{{this.verify.opt}}：{{this.verify.email}}，请按照提示进行操作完成后自动跳转到{{this.verify.pageName}}</div>
+        <div v-else>
+            <el-result icon="warning" title="需要进行邮件验证" :subTitle="this.verify.opt +'：'+this.verify.email+'，请按照提示进行操作完成后自动跳转到'+this.verify.pageName">
+            </el-result>
         </div>
     </div>
-    <div v-if="!jump">
-        页面加载时，传入不支持的跳转类型{{jump}}
+    <div v-else>
+        <el-result icon="error" title="访问错误" subTitle="'页面加载时，传入不支持的跳转类型'+jump">
+        </el-result>
     </div>
 </div>
 </body>

@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.myyf.webssh.constant.UserStatus;
+import com.myyf.webssh.entity.base.LogicDeleteModel;
 import com.myyf.webssh.entity.convert.UserConvert;
 import lombok.Data;
 import org.mapstruct.factory.Mappers;
@@ -14,14 +15,11 @@ import org.mapstruct.factory.Mappers;
  */
 @Data
 @TableName("t_user")
-public class User extends Model<User> {
+public class User extends LogicDeleteModel<User> {
     /**
      * 转换器
      */
     public static final UserConvert CONVERT = Mappers.getMapper(UserConvert.class);
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     @TableField("name")
     private String name;
@@ -34,4 +32,10 @@ public class User extends Model<User> {
 
     @TableField("email")
     private String email;
+
+    @TableField("status")
+    private UserStatus status;
+
+    @TableField("auth_code")
+    private String authCode;
 }

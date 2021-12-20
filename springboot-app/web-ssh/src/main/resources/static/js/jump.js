@@ -29,7 +29,7 @@ let app = new Vue({
                 this.verifyJump('等待中...', '发送邮件到', './signin.html', '登录页')
                 break
             default:
-                throw (`页面加载时，传入不支持的跳转类型${this.jump}`)
+                // throw (`页面加载时，传入不支持的跳转类型${this.jump}`)
         }
     },
     methods: {
@@ -53,13 +53,28 @@ let app = new Vue({
             this.verify.opt = opt
             this.verify.page = page
             this.verify.pageName = pageName
-            let signupInfo = JSON.parse(getCookieAndClear('temp'))
-            this.verify.email = signupInfo.email
+            let uid = getCookieAndClear('temp')
+            // 发送邮件请求
+            this.$http.post(`../user/verify-producer/${uid}`, {}).then(success => {
+                let body = success.body
+                if(body.code !== 2000){
+                    alert("邮件发送失败")
+                    return
+                }
+                // 发送成功,显示等待验证
+                this.showWaitAuth(uid)
+            }, fail => {
+                console.error(fail)
+            })
+
+        },
+        showWaitAuth(uid){
+            // 显示等待
             let timer = 0
             let interval = setInterval(() => {
                 timer++
                 // 查询接口
-                this.$http.get(`../user/verify-check?email=${this.verify.email}`, {}).then(success => {
+                this.$http.get(`../user/verify-check/${uid}`, {}).then(success => {
                     let body = success.body
                     if(body.code === 2000 && body.data){ // 验证成功
                         clearInterval(interval)

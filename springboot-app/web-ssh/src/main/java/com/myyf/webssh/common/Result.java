@@ -52,6 +52,7 @@ public class Result<D> {
         FAIL(5000, International.of("失败", "fail")),
         LOGIN_FAIL(5011, International.of("登录失败", "login failed")),
         UN_LOGIN(5012, International.of("未登录", "not logged in")),
+        USER_NOT_FOUND(5012, International.of("用户未找到", "user not found")),
         UN_SUPPORTED(5021, International.of("不支持的操作", "unsupported operation")),
         SEND_EMAIL_FAIL(5031, International.of("发送邮件失败", "send email failed")),
         VERIFY_EXPIRED(5041, International.of("验证过期", "verify expired")),

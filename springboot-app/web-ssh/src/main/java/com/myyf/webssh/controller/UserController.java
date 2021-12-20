@@ -38,27 +38,27 @@ public class UserController {
         return Result.success(userService.signin(userSigninDto));
     }
 
-    @PostMapping("/verify-producer")
+    @PostMapping("/verify-producer/{uid}")
     @LoginIgnore
-    public Result<?> verifyProducer(@RequestBody UserSignupDto userSignupDto) {
-        return Result.success(userService.verifyProducer(userSignupDto));
+    public Result<?> verifyProducer(@PathVariable("uid") long uid) {
+        return Result.success(userService.verifyProducer(uid));
     }
 
-    @GetMapping("/verify-consumer/{verify}")
+    @GetMapping("/verify-consumer/{uid}/{verify}")
     @LoginIgnore
-    public String verifyConsumer(@PathVariable("verify") String verifyNums, @RequestParam("email") String email) {
+    public String verifyConsumer(@PathVariable("uid") long uid, @PathVariable("verify") String verifyNums) {
         try {
-            userService.verifyConsumer(verifyNums, email, userSSHService::bindServerSSH);
+            userService.verifyConsumer(uid, verifyNums, userSSHService::bindServerSSH);
             return "<h3>验证成功</h3>";
         } catch (VerifyException exc) {
             return "<h3>" + exc.codeEnum.info.getCn() + "</h3>";
         }
     }
 
-    @GetMapping("/verify-check")
+    @GetMapping("/verify-check/{uid}")
     @LoginIgnore
-    public Result<?> verifyCheck(@RequestParam("email") String email) {
-        return Result.success(userService.verifyCheck(email));
+    public Result<?> verifyCheck(@PathVariable("uid") long uid) {
+        return Result.success(userService.verifyCheck(uid));
     }
 
     @GetMapping("/signin-check")
