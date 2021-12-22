@@ -1,48 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Terminal</title>
-    <link rel="stylesheet" href="./plugin/elementui/element.css"/>
-    <link rel="stylesheet" href="./css/index.css"/>
-    <script src="./plugin/vue/vue.min.js"></script>
-    <script src="./plugin/elementui/element.js"></script>
-    <script src="./plugin/vue/vue-resource.min.js"></script>
-    <script src="./plugin/vue/httpVueLoader.js"></script>
-    <!-- xterm -->
-    <link rel="stylesheet" href="./plugin/xterm/css/xterm@4.15.0.css"/>
-    <script src="./plugin/xterm/js/xterm@4.15.0.js" charset="utf-8"></script>
-    <script src="./plugin/xterm/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>
-    <script src="./plugin/xterm/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>
-    <script src="./plugin/xterm/js/xterm-addon-fit@0.5.0.js" charset="utf-8"></script>
+  <meta charset="UTF-8">
+  <title>Terminal</title>
+  <link rel="stylesheet" href="./plugin/elementui/element.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <script src="./plugin/vue/vue.min.js"></script>
+  <script src="./plugin/elementui/element.js"></script>
+  <script src="./plugin/vue/vue-resource.min.js"></script>
+  <script src="./plugin/vue/httpVueLoader.js"></script>
+  <!-- xterm -->
+  <link rel="stylesheet" href="./plugin/xterm/css/xterm@4.15.0.css" />
+  <script src="./plugin/xterm/js/xterm@4.15.0.js" charset="utf-8"></script>
+  <script src="./plugin/xterm/js/xterm-addon-attach@0.6.0.js" charset="utf-8"></script>
+  <script src="./plugin/xterm/js/xterm-addon-webgl@0.11.3.js" charset="utf-8"></script>
+  <script src="./plugin/xterm/js/xterm-addon-fit@0.5.0.js" charset="utf-8"></script>
 </head>
+
 <body>
-<div id="app">
+  <div id="app">
     <new-user-ssh :visible="showNewUserSSH" @close="showNewUserSSH = false" @success="success"></new-user-ssh>
 
     <el-container>
-        <el-header>
-            <el-button type="text" @click="showNewUserSSH = true">新增</el-button>
-            <el-button @click="signout()">退出</el-button>
-        </el-header>
-        <el-container>
-            <el-aside width="200px">
-                <div v-for="userSSH in userSSHList">
-                    <el-button type="text" @click="openTerminal(userSSH)">
-                        {{userSSH.name}}
-                    </el-button>
-                    <el-button type="text" @click="delUserSSH(userSSH)">删除</el-button>
+      <el-header style="height:20px">
+        <el-avatar class="user-avatar" :size="20">
+          <div slot="default">
+            U
+            <el-button @click="signout()"></el-button>
+          </div>
+        </el-avatar>
+
+      </el-header>
+      <el-container class="aside-main-container">
+        <el-aside class="left-aside">
+          <el-menu default-active="1" class="left-menu" @open="" @close="" :collapse="false">
+            <el-menu-item index="1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">实例</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-document"></i>
+              <span slot="title">用户</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              <span slot="title">账号管理</span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <el-row :gutter="10">
+            <el-col :span="6" v-for="userSSH in userSSHList">
+              <el-card class="card-box" shadow="hover" @click.native="alert('打开terminal')">
+                <div slot="header">
+                  <span>{{userSSH.name}}</span>
+                  <i class="delete el-icon-delete" @click.stop="alert('刪除會話')"></i>
                 </div>
-            </el-aside>
-            <el-main>
-                <terminals ref="terminals"></terminals>
-            </el-main>
-        </el-container>
-        <el-footer>Footer</el-footer>
+                <div>{{userSSH.host}}</div>
+                <div>{{userSSH.user}}</div>
+              </el-card>
+            </el-col>
+            <el-col :span="6">
+              <el-card class="new-card-box" shadow="hover" @click.native="showNewUserSSH = true">
+                <div slot="header">
+                  <span>新建会话</span>
+                </div>
+                <i class="el-icon-plus new-icon"></i>
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-main>
+      </el-container>
+      <el-footer>Footer</el-footer>
     </el-container>
-</div>
-<script src="js/common.js" charset="utf-8"></script>
-<script src="js/TerminalTab.js" charset="utf-8"></script>
-<script src="js/index.js" charset="utf-8"></script>
+  </div>
+  <script src="js/common.js" charset="utf-8"></script>
+  <script src="js/TerminalTab.js" charset="utf-8"></script>
+  <script src="js/index.js" charset="utf-8"></script>
 </body>
+
 </html>
