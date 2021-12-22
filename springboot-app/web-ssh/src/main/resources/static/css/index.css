@@ -1,9 +1,12 @@
+body{
+    height: 100% !important;
+}
 .el-header, .el-footer {
     background-color: #F2F2F2;
     color: #0E0E0E;
     text-align: left;
-    line-height: 20px;
-    height: 20px;
+    line-height: 50px;
+    height: 30px !important;
 }
 
 .el-aside {
@@ -11,12 +14,52 @@
     color: #0E0E0E;
     text-align: left;
     line-height: 200px;
-    border-right: #F2F2F2 1px solid;
 }
 
 .el-main {
     background-color: #FFFFFF;
     color: #0E0E0E;
+     /*line-height: 160px; */
+}
+.left-menu{
+   height: 100% !important;
+}
+.aside-main-container{
+    height: 900px !important;
+}
+.left-aside{
+    width:200px !important;
+}
+
+.card-box, .new-card-box {
+    /* width:300px;
+    height: 150px; */
+    height: 150px !important;
+    margin: 30px !important;
+}
+.card-box{
+    background-color: rgb(245, 241, 231);
+}
+.new-card-box {
+    background-color: rgb(213, 233, 241);
     text-align: center;
-    line-height: 160px;
+}
+.new-card-box:hover, .card-box:hover{
+    cursor: pointer
+}
+.new-icon{
+    font-size: 50px;
+}
+.new-icon:hover{
+    color: white;
+}
+.delete{
+    float: right !important;
+}
+.delete:hover{
+    color: red;
+}
+.user-avatar{
+    background-color: skyblue;
+    float: right;
 }
