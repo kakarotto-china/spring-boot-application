@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-      title="新增连接信息"
+      title="修改连接信息"
       :visible.sync="visible"
       width="30%"
       center
@@ -25,7 +25,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       {{ testMsg }}<el-button @click="test">连接测试</el-button>
-      <el-button type="primary" @click="submit('userSSHForm')">注 册</el-button>
+      <el-button type="primary" @click="submit('userSSHForm')">修 改</el-button>
     </span>
   </el-dialog>
 </template>
@@ -63,7 +63,7 @@ let validatePasswd = (rule, value, callback) => {
 }
 
 module.exports = {
-  name: 'newUserSSH',
+  name: 'editUserSSH',
   data: () => {
     return {
       testMsg: '',
@@ -100,6 +100,9 @@ module.exports = {
   },
   watch: {},
   methods: {
+    initUserSSH(userSSH) {
+      this.userSSH = userSSH
+    },
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) {
@@ -119,6 +122,7 @@ module.exports = {
       this.visible = false
       // 清除信息
       this.userSSH = {
+        id: '',
         name: '',
         host: '',
         port: 22,

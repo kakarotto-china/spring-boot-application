@@ -20,14 +20,15 @@
 
 <body>
   <div id="app">
-    <new-user-ssh :visible="showNewUserSSH" @close="showNewUserSSH = false" @success="success"></new-user-ssh>
+    <new-user-ssh ref="newUserSSH" :visible="showNewUserSSH" @close="showNewUserSSH = false" @submit="newUserSSH" @test="test"></new-user-ssh>
+    <edit-user-ssh ref="editUserSSH" :visible="showEditUserSSH" @close="showEditUserSSH = false" @submit="editUserSSH" @test="test"></edit-user-ssh>
 
     <el-container>
       <el-header style="height:20px">
         <el-avatar class="user-avatar" :size="20">
           <div slot="default">
             U
-            <el-button @click="signout()"></el-button>
+            <el-button @click="signout"></el-button>
           </div>
         </el-avatar>
 
@@ -52,17 +53,18 @@
         <el-main>
           <el-row :gutter="10">
             <el-col :span="6" v-for="userSSH in userSSHList">
-              <el-card class="card-box" shadow="hover" @click.native="alert('打开terminal')">
+              <el-card class="card-box" shadow="hover" @click.native="openUserSSH(userSSH)">
                 <div slot="header">
                   <span>{{userSSH.name}}</span>
-                  <i class="delete el-icon-delete" @click.stop="alert('刪除會話')"></i>
+                  <i class="delete el-icon-delete" @click.stop="delUserSSH(userSSH.id)"></i>
+                  <i class="edit el-icon-edit-outline" @click.stop="showEditDialog(userSSH.id)"></i>
                 </div>
                 <div>{{userSSH.host}}</div>
                 <div>{{userSSH.user}}</div>
               </el-card>
             </el-col>
             <el-col :span="6">
-              <el-card class="new-card-box" shadow="hover" @click.native="showNewUserSSH = true">
+              <el-card class="new-card-box" shadow="hover" @click.native="showNewDialog">
                 <div slot="header">
                   <span>新建会话</span>
                 </div>

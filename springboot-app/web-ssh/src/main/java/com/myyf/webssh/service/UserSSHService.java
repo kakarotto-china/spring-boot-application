@@ -1,7 +1,10 @@
 package com.myyf.webssh.service;
 
 import com.myyf.webssh.entity.User;
+import com.myyf.webssh.entity.dto.UserSSHEditDto;
 import com.myyf.webssh.entity.dto.UserSSHNewDto;
+import com.myyf.webssh.entity.dto.UserSSHTestDto;
+import com.myyf.webssh.entity.vo.UserSSHDetailVo;
 import com.myyf.webssh.entity.vo.UserSSHVo;
 
 import java.util.List;
@@ -27,5 +30,11 @@ public interface UserSSHService {
 
     UserSSHVo add(UserSSHNewDto userSSHNewDto);
 
+    UserSSHVo edit(UserSSHEditDto userSSHEditDto);
+
     void delete(long id);
+
+    UserSSHDetailVo findDetail(long id);
+
+    String test(UserSSHTestDto userSSHTestDto);
 }

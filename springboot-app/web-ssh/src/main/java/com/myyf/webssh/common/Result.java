@@ -50,6 +50,7 @@ public class Result<D> {
     public enum CodeEnum {
         SUCCESS(2000, International.of("成功", "success")),
         FAIL(5000, International.of("失败", "fail")),
+        NOT_FOUND(5001, International.of("资源未找到", "resource not found")),
         LOGIN_FAIL(5011, International.of("登录失败", "login failed")),
         UN_LOGIN(5012, International.of("未登录", "not logged in")),
         USER_NOT_FOUND(5012, International.of("用户未找到", "user not found")),

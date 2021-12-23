@@ -1,17 +1,26 @@
 package com.myyf.webssh.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.ssh.JschUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebSSHApplication;
+import com.myyf.webssh.common.Result;
+import com.myyf.webssh.common.exception.NotFoundException;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.UserSSH;
+import com.myyf.webssh.entity.dto.UserSSHEditDto;
 import com.myyf.webssh.entity.dto.UserSSHNewDto;
+import com.myyf.webssh.entity.dto.UserSSHTestDto;
+import com.myyf.webssh.entity.vo.UserSSHDetailVo;
 import com.myyf.webssh.entity.vo.UserSSHVo;
 import com.myyf.webssh.mapper.UserSSHMapper;
 import com.myyf.webssh.service.UserSSHService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
@@ -60,9 +69,41 @@ public class UserSSHServiceImpl implements UserSSHService {
     }
 
     @Override
+    public UserSSHVo edit(UserSSHEditDto userSSHEditDto) {
+        UserSSH userSSH = UserSSH.CONVERT.toUserSSH(userSSHEditDto);
+        UserSSH us = userSSH.selectById();
+        if (us == null) {
+            throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
+        }
+        userSSH.updateById();
+        return UserSSH.CONVERT.toUserSSHVo(us);
+    }
+
+    @Override
     public void delete(long id) {
         UserSSH userSSH = new UserSSH();
         userSSH.setId(id);
         userSSH.deleteById();
+    }
+
+    @Override
+    public UserSSHDetailVo findDetail(long id) {
+        UserSSH userSSH = new UserSSH();
+        userSSH.setId(id);
+        UserSSH us = userSSH.selectById();
+        if (us == null) {
+            throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
+        }
+        return UserSSH.CONVERT.toUserSSHDetailVo(us);
+    }
+
+    @SneakyThrows
+    @Override
+    public String test(UserSSHTestDto userSSHTestDto) {
+        Session session = JschUtil.createSession(userSSHTestDto.getHost(), userSSHTestDto.getPort(), userSSHTestDto.getUser(), userSSHTestDto.getPasswd());
+        session.setTimeout(30*1000);
+        String res = JschUtil.exec(session, "who", StandardCharsets.UTF_8);
+        JschUtil.close(session);
+        return res;
     }
 }

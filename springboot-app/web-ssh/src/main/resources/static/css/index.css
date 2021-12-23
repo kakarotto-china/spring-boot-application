@@ -53,12 +53,17 @@ body{
 .new-icon:hover{
     color: white;
 }
-.delete{
+.delete, .edit{
     float: right !important;
+    margin-left: 10px;
 }
 .delete:hover{
     color: red;
 }
+.edit:hover{
+    color: #66b1ff;
+}
+
 .user-avatar{
     background-color: skyblue;
     float: right;
