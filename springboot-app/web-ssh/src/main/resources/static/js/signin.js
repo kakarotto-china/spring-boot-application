@@ -20,8 +20,8 @@ let app = new Vue({
         signinForm: {
             name: '',
             passwd: '',
+            rememberme: false
         },
-        rememberme:false,
         rules: {
             name: [
                 {validator: validateName, trigger: 'blur'}
@@ -41,17 +41,17 @@ let app = new Vue({
                 this.$http.post('../user/signin', this.signinForm).then(
                     success => {
                         let body = success.body
-                        if(body.code === 2000){
-                            setCookie('jump', JUMP_TYPE.SIGN_IN, 7)
-                            if(this.rememberme){
-                                setCookie('token', body.data, 7, "/")
-                            }else {
-                                setCookie('token', body.data, 0, "/")
-                            }
-                            window.location.href='./jump.html'
-                        }else{
-                            console.log(body)
+                        if(body.code !== 2000){
+                            this.$message.error(body.message[getLang()]);
+                            return
                         }
+                        setCookie('jump', JUMP_TYPE.SIGN_IN, 7)
+                        if(this.signinForm.rememberme){
+                            setCookie('token', body.data, 7, "/")
+                        }else {
+                            setCookie('token', body.data, 0, "/")
+                        }
+                        window.location.href='./jump.html'
                     }, fail => {
                         console.log(fail)
                     })

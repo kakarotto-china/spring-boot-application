@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Terminal</title>
-  <link rel="stylesheet" href="./plugin/elementui/element.css" />
+  <link rel="stylesheet" href="plugin/elementui/element@2.15.7.css" />
   <link rel="stylesheet" href="./css/index.css" />
-  <script src="./plugin/vue/vue.min.js"></script>
-  <script src="./plugin/elementui/element.js"></script>
+  <script src="plugin/vue/vue.min@2.6.14.js"></script>
+  <script src="plugin/elementui/element@2.15.7.js"></script>
   <script src="./plugin/vue/vue-resource.min.js"></script>
   <script src="./plugin/vue/httpVueLoader.js"></script>
   <!-- xterm -->
@@ -26,9 +26,8 @@
     <el-container>
       <el-header style="height:20px">
         <el-avatar class="user-avatar" :size="20">
-          <div slot="default">
+          <div slot="default" @click="signout">
             U
-            <el-button @click="signout"></el-button>
           </div>
         </el-avatar>
 

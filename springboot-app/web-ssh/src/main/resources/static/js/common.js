@@ -9,6 +9,10 @@ const JUMP_TYPE = {
     SIGN_IN:3
 }
 
+const getLang = ()=>{
+    return navigator.language === 'zh-CN' ? 'cn' : 'en';
+}
+
 const setCookie = (cname, cvalue, exdays, path) => {
     if (exdays > 0) {
         let d = new Date();

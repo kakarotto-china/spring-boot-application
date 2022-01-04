@@ -30,7 +30,7 @@ let app = new Vue({
                     this.userSSHList = body.data
                     return
                 }
-                console.log(body)
+                this.$message.error(body.message[getLang()]);
             }, fail => {
                 console.error(fail)
             })
@@ -47,15 +47,16 @@ let app = new Vue({
             this.showNewUserSSH = true
         },
         newUserSSH(userSSH) {
-            // 注册
+            // 新建
             this.$http.post(`./user-ssh/new`, userSSH).then(success => {
                 let body = success.body
                 if (body.code !== 2000) {
-                    alert('注册失败')
+                    this.$message.error(body.message[getLang()]);
                     return
                 }
                 this.$refs['newUserSSH'].clear()
                 this.findAllUserSSH()
+                this.$message.success(body.message[getLang()]);
             }, fail => {
                 console.error(fail)
             })
@@ -69,7 +70,7 @@ let app = new Vue({
                     this.$refs['editUserSSH'].initUserSSH(body.data)
                     return
                 }
-                console.log(body)
+                this.$message.error(body.message[getLang()]);
             }, fail => {
                 console.error(fail)
             })
@@ -79,11 +80,12 @@ let app = new Vue({
             this.$http.put(`./user-ssh/edit`, userSSH).then(success => {
                 let body = success.body
                 if (body.code !== 2000) {
-                    alert('修改失败')
+                    this.$message.error(body.message[getLang()]);
                     return
                 }
                 this.findAllUserSSH()
                 callback()
+                this.$message.success(body.message[getLang()]);
             }, fail => {
                 console.error(fail)
             })
@@ -92,14 +94,14 @@ let app = new Vue({
             this.$http.post(`./user-ssh/test`, userSSH).then(success => {
                 let body = success.body
                 if (body.code === 2000) {
-                    callback('测试连接成功')
+                    callback('<span style="color: #00d75f; margin-left: 0">测试连接成功</span>')
                     return
                 }
                 console.log(body)
-                callback('测试连接失败')
+                callback('<span style="color: red; margin-left: 0">测试连接失败</span>')
             }, fail => {
                 console.error(fail)
-                callback('测试连接失败')
+                callback('<span style="color: red; margin-left: 0">测试连接失败</span>')
             })
         },
         delUserSSH(id) {
@@ -108,9 +110,10 @@ let app = new Vue({
                 if (body.code === 2000) {
                     // 删除成功
                     this.findAllUserSSH()
+                    this.$message.success(body.message[getLang()]);
                     return
                 }
-                console.log(body)
+                this.$message.error(body.message[getLang()]);
             }, fail => {
                 console.error(fail)
             })

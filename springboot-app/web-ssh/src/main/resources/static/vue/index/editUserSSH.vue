@@ -22,9 +22,12 @@
       <el-form-item label="密码" prop="passwd">
         <el-input type="password" v-model="userSSH.passwd"></el-input>
       </el-form-item>
+      <el-form-item>
+        <span v-html="testHtml"></span>
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      {{ testMsg }}<el-button @click="test">连接测试</el-button>
+      <el-button @click="test">连接测试</el-button>
       <el-button type="primary" @click="submit('userSSHForm')">修 改</el-button>
     </span>
   </el-dialog>
@@ -66,7 +69,7 @@ module.exports = {
   name: 'editUserSSH',
   data: () => {
     return {
-      testMsg: '',
+      testHtml: '',
       userSSH: {
         name: '',
         host: '',
@@ -113,10 +116,10 @@ module.exports = {
       });
     },
     test() {
-      this.$emit('test', this.userSSH, this.setTestMsg)
+      this.$emit('test', this.userSSH, this.setTestHtml)
     },
-    setTestMsg(msg) {
-      this.testMsg = msg
+    setTestHtml(html) {
+      this.testHtml = html
     },
     clear() {
       this.visible = false
@@ -131,6 +134,7 @@ module.exports = {
       }
     },
     close() {
+      this.testHtml = ''
       this.$emit('close')
     }
   }

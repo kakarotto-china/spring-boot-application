@@ -1,3 +1,11 @@
-.auto-code{
-    width: 50px;
+body {
+    margin: 0;
+    padding: 0;
+}
+.outer {
+    position: relative;
+    height: 700px;
+}
+.inner {
+    position: absolute;
 }

@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="../plugin/elementui/element.css"/>
+    <link rel="stylesheet" href="../plugin/elementui/element@2.15.7.css"/>
     <link rel="stylesheet" href="../css/jump.css"/>
-    <script src="../plugin/vue/vue.min.js"></script>
-    <script src="../plugin/elementui/element.js"></script>
+    <script src="../plugin/vue/vue.min@2.6.14.js"></script>
+    <script src="../plugin/elementui/element@2.15.7.js"></script>
     <script src="../plugin/vue/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app">
-    <div v-if="jump">
-        <div v-if="jump !== JUMP_TYPE.VERIFY">
-            <el-result icon="success" :title="this.delayed.opt" :subTitle="this.delayed.second + '秒后跳转'">
-                <template slot="extra">
-                    <a :href="this.delayed.page">{{this.delayed.pageName}}</a>
+    <div ref="outer" class="outer">
+        <div ref="inner" class="inner">
+            <el-result class="result" :icon="result.icon" :title="result.title" :sub-title="result.subTitle">
+                <template slot="extra" v-if="result.link">
+                    <a :href="result.link">{{result.desc}}</a>
+                </template>
+                <template slot="extra" v-else>
+                    <span>{{result.desc}}</span>
                 </template>
             </el-result>
         </div>
-        <div v-else>
-            <el-result icon="warning" title="需要进行邮件验证" :subTitle="this.verify.opt +'：'+this.verify.email+'，请按照提示进行操作完成后自动跳转到'+this.verify.pageName">
-            </el-result>
-        </div>
-    </div>
-    <div v-else>
-        <el-result icon="error" title="访问错误" subTitle="'页面加载时，传入不支持的跳转类型'+jump">
-        </el-result>
     </div>
 </div>
 </body>

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign In</title>
-    <link rel="stylesheet" href="../plugin/elementui/element.css"/>
+    <link rel="stylesheet" href="../plugin/elementui/element@2.15.7.css"/>
     <link rel="stylesheet" href="../css/signin.css"/>
-    <script src="../plugin/vue/vue.min.js"></script>
-    <script src="../plugin/elementui/element.js"></script>
+    <script src="../plugin/vue/vue.min@2.6.14.js"></script>
+    <script src="../plugin/elementui/element@2.15.7.js"></script>
     <script src="../plugin/vue/httpVueLoader.js"></script>
     <script src="../plugin/vue/vue-resource.min.js"></script>
 </head>
@@ -31,7 +31,7 @@
                 </el-form-item>
                 <el-form-item label="登录状态">
                     7日内记住
-                    <el-switch v-model="rememberme" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                    <el-switch v-model="signinForm.rememberme" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                 </el-form-item>
                 <el-form-item label="没有账号?">
                     <a href="./signup.html">开始注册</a>

@@ -78,7 +78,7 @@ let app = new Vue({
                 this.$http.post(`../user/signup`, this.signupForm).then(success => {
                     let body = success.body
                     if (body.code !== 2000) {
-                        alert('注册失败')
+                        this.$message.error(body.data);
                         return
                     }
                     setCookie('jump', JUMP_TYPE.VERIFY, 7)
