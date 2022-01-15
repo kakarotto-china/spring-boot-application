@@ -1,7 +1,7 @@
 package com.myyf.webssh;
 
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.common.exception.LoginException;
+import com.myyf.webssh.common.exception.UnLoginException;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.interceptor.LoginInterceptor;
 import com.myyf.webssh.util.JWTUtils;
@@ -53,6 +53,6 @@ public class WebSSHApplication implements WebMvcConfigurer, ApplicationContextAw
 
     public static User getUser() {
         String token = getRequest().getHeader("token");
-        return JWTUtils.verify(token).orElseThrow(() -> new LoginException(Result.CodeEnum.UN_LOGIN));
+        return JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(Result.CodeEnum.UN_LOGIN));
     }
 }

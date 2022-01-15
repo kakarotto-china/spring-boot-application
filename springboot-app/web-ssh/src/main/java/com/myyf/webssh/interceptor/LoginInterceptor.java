@@ -3,7 +3,7 @@ package com.myyf.webssh.interceptor;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ClassUtil;
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.common.exception.LoginException;
+import com.myyf.webssh.common.exception.UnLoginException;
 import com.myyf.webssh.util.JWTUtils;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.method.HandlerMethod;
@@ -48,6 +48,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private void checkSignin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String token = Optional.ofNullable(request.getHeader(tokenName)).orElse(request.getParameter(tokenName));
-        JWTUtils.verify(token).orElseThrow(() -> new LoginException(Result.CodeEnum.UN_LOGIN));
+        JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(Result.CodeEnum.UN_LOGIN));
     }
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebSSHApplication;
 import com.myyf.webssh.common.Result;
+import com.myyf.webssh.common.exception.DuplicateResourceException;
 import com.myyf.webssh.common.exception.NotFoundException;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.UserSSH;
@@ -36,10 +37,9 @@ public class UserSSHServiceImpl implements UserSSHService {
 
     @Override
     public List<UserSSHVo> findAll(long uid) {
-        UserSSH userSSH = new UserSSH();
         LambdaQueryWrapper<UserSSH> query = new LambdaQueryWrapper<>();
         query.eq(UserSSH::getUid, uid);
-        List<UserSSH> userSSHList = userSSH.selectList(query);
+        List<UserSSH> userSSHList = userSSHMapper.selectList(query);
         return UserSSH.CONVERT.toUserSSHVoList(userSSHList);
     }
 
@@ -63,6 +63,12 @@ public class UserSSHServiceImpl implements UserSSHService {
     public UserSSHVo add(UserSSHNewDto userSSHNewDto) {
         UserSSH userSSH = UserSSH.CONVERT.toUserSSH(userSSHNewDto);
         User user = WebSSHApplication.getUser();
+        LambdaQueryWrapper<UserSSH> query = new LambdaQueryWrapper<>();
+        query.eq(UserSSH::getUser, userSSH.getUser()).eq(UserSSH::getHost, userSSH.getHost()).eq(UserSSH::getUid, user.getId());
+        UserSSH uSSH = userSSHMapper.selectOne(query);
+        if(uSSH!=null){
+            throw new DuplicateResourceException(Result.CodeEnum.DUPLICATE_RESOURCE);
+        }
         userSSH.setUid(user.getId());
         userSSH.insert();
         return UserSSH.CONVERT.toUserSSHVo(userSSH);
@@ -70,11 +76,11 @@ public class UserSSHServiceImpl implements UserSSHService {
 
     @Override
     public UserSSHVo edit(UserSSHEditDto userSSHEditDto) {
-        UserSSH userSSH = UserSSH.CONVERT.toUserSSH(userSSHEditDto);
-        UserSSH us = userSSH.selectById();
+        UserSSH us = userSSHMapper.selectById(userSSHEditDto.getId());
         if (us == null) {
             throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
         }
+        UserSSH userSSH = UserSSH.CONVERT.toUserSSH(userSSHEditDto);
         userSSH.updateById();
         return UserSSH.CONVERT.toUserSSHVo(us);
     }
@@ -88,12 +94,12 @@ public class UserSSHServiceImpl implements UserSSHService {
 
     @Override
     public UserSSHDetailVo findDetail(long id) {
-        UserSSH userSSH = new UserSSH();
-        userSSH.setId(id);
-        UserSSH us = userSSH.selectById();
+        UserSSH us = userSSHMapper.selectById(id);
         if (us == null) {
             throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
         }
+        UserSSH userSSH = new UserSSH();
+        userSSH.setId(id);
         return UserSSH.CONVERT.toUserSSHDetailVo(us);
     }
 

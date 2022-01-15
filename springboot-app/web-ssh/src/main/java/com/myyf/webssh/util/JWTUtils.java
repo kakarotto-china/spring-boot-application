@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.User;
-import com.myyf.webssh.common.exception.LoginException;
+import com.myyf.webssh.common.exception.UnLoginException;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -26,13 +26,14 @@ public class JWTUtils {
      * @param user user
      * @return String
      */
-    public static String generateToken(User user) {
-        if (user == null) {
-            throw new LoginException(Result.CodeEnum.LOGIN_FAIL);
-        }
+    public static String generateToken(User user, boolean rememberme) {
         Map<String, Object> map = CollUtil.newHashMap();
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 30);
+        if(rememberme){
+            instance.add(Calendar.DAY_OF_YEAR, 7);
+        }else{
+            instance.add(Calendar.MINUTE, 30); // 默认30分钟
+        }
         return JWT.create()
                 .withHeader(map)//添加头部
                 .withClaim("id", user.getId())//添加payload
@@ -65,7 +66,7 @@ public class JWTUtils {
             user.setEmail(decodedJWT.getClaim("email").asString());
             return Optional.of(user);
         } catch (JWTVerificationException e) {
-            throw new LoginException(Result.CodeEnum.UN_LOGIN);
+            throw new UnLoginException(Result.CodeEnum.UN_LOGIN);
         }
     }
 

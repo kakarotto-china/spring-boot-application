@@ -5,9 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myyf.webssh.WebSSHApplication;
 import com.myyf.webssh.common.Result;
-import com.myyf.webssh.common.exception.EmailException;
-import com.myyf.webssh.common.exception.ServiceRuntimeException;
-import com.myyf.webssh.common.exception.VerifyException;
+import com.myyf.webssh.common.exception.*;
+import com.myyf.webssh.config.prop.AuthProp;
 import com.myyf.webssh.constant.UserStatus;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.dto.UserSigninDto;
@@ -34,20 +33,37 @@ public class UserServiceImpl implements UserService {
     @Value("${spring.mail.username}")
     private String adminEmail;
 
+    private final AuthProp authProp;
+
     private final UserMapper userMapper;
 
     private final JavaMailSender javaMailSender;
 
-    public UserServiceImpl(UserMapper userMapper, JavaMailSender javaMailSender) {
+    public UserServiceImpl(UserMapper userMapper, JavaMailSender javaMailSender, AuthProp authProp) {
         this.userMapper = userMapper;
         this.javaMailSender = javaMailSender;
+        this.authProp = authProp;
     }
 
     @Override
     public long signup(UserSignupDto userSignupDto) {
         User user = User.CONVERT.toUser(userSignupDto);
+        LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
+        query.eq(User::getName, user.getName()).in(User::getStatus, UserStatus.USED, UserStatus.AUTH, UserStatus.CREATED);
+        User u = userMapper.selectOne(query);
+        // todo 此处查询时不应该使用软删除
         user.setStatus(UserStatus.CREATED); // 创建状态
-        user.insert();
+        if (u != null) {
+            if(u.getStatus() == UserStatus.USED){
+                // 用户已存在
+                throw new DuplicateResourceException(Result.CodeEnum.DUPLICATE_RESOURCE);
+            }else{
+                user.setId(u.getId());
+                user.updateById();
+            }
+        }else{
+            user.insert();
+        }
         return user.getId();
     }
 
@@ -56,9 +72,15 @@ public class UserServiceImpl implements UserService {
         User user = User.CONVERT.toUser(userSigninDto);
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         // 查询使用状态
-        wrapper.eq(User::getName, user.getName()).eq(User::getPasswd, user.getPasswd()).eq(User::getStatus, UserStatus.USED.status);
-        User result = user.selectOne(wrapper);
-        String token = JWTUtils.generateToken(result);
+        wrapper.eq(User::getName, user.getName()).eq(User::getStatus, UserStatus.USED.status);
+        User result = userMapper.selectOne(wrapper);
+        if (result == null) {
+            throw new LoginException(Result.CodeEnum.USER_NOT_FOUND);
+        }
+        if (!StrUtil.equals(result.getPasswd(), user.getPasswd())) {
+            throw new LoginException(Result.CodeEnum.USER_PASSWD_ERROR);
+        }
+        String token = JWTUtils.generateToken(result, userSigninDto.isRememberme());
         WebSSHApplication.getResponse().setHeader("token", token);
         return token;
     }
@@ -89,7 +111,8 @@ public class UserServiceImpl implements UserService {
             helper.setSentDate(new Date());
             // 设置邮件的正文
             String verify = RandomUtil.randomNumbers(6);
-            String url = StrUtil.format("http://192.168.1.9:5555/user/verify-consumer/{}/{}", user.getId(), verify);
+
+            String url = StrUtil.format("{}:{}/user/verify-consumer/{}/{}", authProp.getDomain(), authProp.getPort(), user.getId(), verify);
             String content = StrUtil.format("请访问以下链接进行验证：<br/> <a href=\"{}\">{}</a>", url, url);
             helper.setText(content, true);
             // 发送邮件
@@ -127,9 +150,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User findUser(long uid, Supplier<ServiceRuntimeException> supplier) {
-        User tbUser = new User();
-        tbUser.setId(uid);
-        User user = tbUser.selectById();
+        User user = userMapper.selectById(uid);
         if (user == null) {
             throw supplier.get();
         }
