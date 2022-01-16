@@ -3,7 +3,7 @@ package com.myyf.webssh.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.myyf.webssh.WebSSHApplication;
+import com.myyf.webssh.WebTerminalApplication;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.common.exception.*;
 import com.myyf.webssh.config.prop.AuthProp;
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             throw new LoginException(Result.CodeEnum.USER_PASSWD_ERROR);
         }
         String token = JWTUtils.generateToken(result, userSigninDto.isRememberme());
-        WebSSHApplication.getResponse().setHeader("token", token);
+        WebTerminalApplication.getResponse().setHeader("token", token);
         return token;
     }
 

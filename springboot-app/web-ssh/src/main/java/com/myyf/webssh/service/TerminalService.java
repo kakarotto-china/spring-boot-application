@@ -2,36 +2,37 @@ package com.myyf.webssh.service;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.Session;
-import com.myyf.webssh.ws.server.SSHConnectionInfo;
+import com.myyf.webssh.ws.server.TerminalConnectInfo;
 
 import java.util.function.Consumer;
 
 
-public interface SSHService {
+public interface TerminalService {
     /**
      * 打开session连接
      *
-     * @param sshConnectionInfo sshConnectionInfo
+     * @param terminalConnectInfo terminalConnectInfo
      * @return Session
      */
-    Session connectSession(SSHConnectionInfo sshConnectionInfo);
+    Session connectSession(TerminalConnectInfo terminalConnectInfo);
 
     /**
      * 打开通道
      *
      * @param session           session
-     * @param sshConnectionInfo sshConnectionInfo
+     * @param terminalConnectInfo terminalConnectInfo
      * @return Channel
      */
-    Channel connectChannel(Session session, SSHConnectionInfo sshConnectionInfo);
+    Channel connectChannel(Session session, TerminalConnectInfo terminalConnectInfo);
 
     /**
      * 循环消费通道流
      *
      * @param channel  channel
+     * @param bufferSize bufferSize
      * @param consumer consumer
      */
-    void consumerTerminal(Channel channel, Consumer<byte[]> consumer);
+    void consumerTerminal(Channel channel, int bufferSize, Consumer<byte[]> consumer);
 
     /**
      * 向通道发送消息

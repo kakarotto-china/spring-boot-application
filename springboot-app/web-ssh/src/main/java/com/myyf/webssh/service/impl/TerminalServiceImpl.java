@@ -4,8 +4,8 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.myyf.webssh.async.AsyncExecutor;
-import com.myyf.webssh.service.SSHService;
-import com.myyf.webssh.ws.server.SSHConnectionInfo;
+import com.myyf.webssh.service.TerminalService;
+import com.myyf.webssh.ws.server.TerminalConnectInfo;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,38 +15,38 @@ import java.util.function.Consumer;
 
 @Service
 @Slf4j
-public class SSHServiceImpl implements SSHService {
+public class TerminalServiceImpl implements TerminalService {
     private final AsyncExecutor asyncExecutor;
 
-    public SSHServiceImpl(AsyncExecutor asyncExecutor) {
+    public TerminalServiceImpl(AsyncExecutor asyncExecutor) {
         this.asyncExecutor = asyncExecutor;
     }
 
     @SneakyThrows
     @Override
-    public Session connectSession(SSHConnectionInfo sshConnectionInfo) {
+    public Session connectSession(TerminalConnectInfo terminalConnectInfo) {
         JSch jSch = new JSch();
-        Session session = jSch.getSession(sshConnectionInfo.getUsername(), sshConnectionInfo.getHost(), sshConnectionInfo.getPort());
-        session.setPassword(sshConnectionInfo.getPasswd());
-        session.setConfig(sshConnectionInfo.getProperties());
-        session.connect(sshConnectionInfo.getSessionTimeoutMs()); // 连接超时时间30s
+        Session session = jSch.getSession(terminalConnectInfo.getUsername(), terminalConnectInfo.getHost(), terminalConnectInfo.getPort());
+        session.setPassword(terminalConnectInfo.getPasswd());
+        session.setConfig(terminalConnectInfo.getProperties());
+        session.connect(terminalConnectInfo.getSessionTimeoutMs()); // 连接超时时间30s
         return session;
     }
 
     @SneakyThrows
     @Override
-    public Channel connectChannel(Session session, SSHConnectionInfo sshConnectionInfo) {
+    public Channel connectChannel(Session session, TerminalConnectInfo terminalConnectInfo) {
         // 开启shell通道
         Channel channel = session.openChannel("shell");
 //        // 通道连接 超时时间3s
-//        channel.connect(sshConnectionInfo.getChannelTimeoutMs());
+        channel.connect(terminalConnectInfo.getChannelTimeoutMs());
         return channel;
     }
 
     @SneakyThrows
     @Override
-    public void consumerTerminal(Channel channel, Consumer<byte[]> consumer) {
-        asyncExecutor.loopReading(channel.getInputStream(), consumer);
+    public void consumerTerminal(Channel channel, int bufferSize, Consumer<byte[]> consumer) {
+        asyncExecutor.loopReading(channel.getInputStream(), bufferSize, consumer);
         // 通道连接 超时时间3s
         channel.connect(3000); // 在开始读取channel后再链接，可以获取到欢迎信息....
     }

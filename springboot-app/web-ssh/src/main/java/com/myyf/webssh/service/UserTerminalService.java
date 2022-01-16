@@ -4,22 +4,22 @@ import com.myyf.webssh.entity.User;
 import com.myyf.webssh.entity.dto.UserSSHEditDto;
 import com.myyf.webssh.entity.dto.UserSSHNewDto;
 import com.myyf.webssh.entity.dto.UserSSHTestDto;
-import com.myyf.webssh.entity.vo.UserSSHDetailVo;
-import com.myyf.webssh.entity.vo.UserSSHVo;
+import com.myyf.webssh.entity.vo.UserTerminalDetailVo;
+import com.myyf.webssh.entity.vo.UserTerminalVo;
 
 import java.util.List;
 
 /**
- * UserSSHService
+ * UserTerminalService
  */
-public interface UserSSHService {
+public interface UserTerminalService {
     /**
      * 查询用户所有ssh信息
      *
      * @param uid uid
-     * @return List<UserSSHVo>
+     * @return List<UserTerminalVo>
      */
-    List<UserSSHVo> findAll(long uid);
+    List<UserTerminalVo> findAll(long uid);
 
     /**
      * 绑定服务器连接信息
@@ -28,13 +28,13 @@ public interface UserSSHService {
      */
     void bindServerSSH(User user);
 
-    UserSSHVo add(UserSSHNewDto userSSHNewDto);
+    UserTerminalVo add(UserSSHNewDto userSSHNewDto);
 
-    UserSSHVo edit(UserSSHEditDto userSSHEditDto);
+    UserTerminalVo edit(UserSSHEditDto userSSHEditDto);
 
     void delete(long id);
 
-    UserSSHDetailVo findDetail(long id);
+    UserTerminalDetailVo findDetail(long id);
 
     String test(UserSSHTestDto userSSHTestDto);
 }

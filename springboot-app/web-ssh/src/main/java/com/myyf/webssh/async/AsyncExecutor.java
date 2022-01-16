@@ -19,9 +19,9 @@ public class AsyncExecutor {
      * @param consumer 处理读到的直字节的方法
      */
     @Async("inputStreamPipeline")
-    public void loopReading(InputStream in, Consumer<byte[]> consumer) {
+    public void loopReading(InputStream in, int bufferSize, Consumer<byte[]> consumer) {
         try {
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[bufferSize];
             int len;
             while ((len = in.read(buffer)) != -1) {
                 consumer.accept(Arrays.copyOfRange(buffer, 0, len));

@@ -8,7 +8,7 @@ import java.util.Properties;
  * ssh连接信息
  */
 @Data
-public class SSHConnectionInfo {
+public class TerminalConnectInfo {
     private String username = "ubuntu";
 
     private String passwd = "yuehao12#$";

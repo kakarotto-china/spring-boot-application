@@ -22,11 +22,11 @@ import java.util.Objects;
 
 @SpringBootApplication
 @ServletComponentScan
-public class WebSSHApplication implements WebMvcConfigurer, ApplicationContextAware {
+public class WebTerminalApplication implements WebMvcConfigurer, ApplicationContextAware {
     private static ApplicationContext CONTEXT;
 
     public static void main(String[] args) {
-        SpringApplication.run(WebSSHApplication.class, args);
+        SpringApplication.run(WebTerminalApplication.class, args);
     }
 
     @Override

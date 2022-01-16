@@ -7,6 +7,7 @@
     <script src="../plugin/vue/vue.min@2.6.14.js"></script>
     <script src="../plugin/vue/httpVueLoader.js"></script>
     <script src="../plugin/elementui/element@2.15.7.js"></script>
+    <script src="../plugin/vue-components.js"></script>
     <!-- xterm -->
     <link rel="stylesheet" href="../plugin/xterm/css/xterm@4.15.0.css"/>
     <script src="../plugin/xterm/js/xterm@4.15.0.js" charset="utf-8"></script>
@@ -17,9 +18,7 @@
 <body>
 <div id="app">
     <div v-if="userSSH.id" class="terminal">
-        <web-socket :path="ws.path" @onopen="wsopen" @onmessage="wsmessage"
-                    @onconect="wsconnect"></web-socket>
-        <terminal :config="term.config" @oninit="oninit" @ondata="ondata"></terminal>
+        <web-terminal :config="term.config" :ws-url="ws.url" @oninit="oninit"></web-terminal>
     </div>
     <div v-else>
         资源访问错误：{{userSSH.id}}

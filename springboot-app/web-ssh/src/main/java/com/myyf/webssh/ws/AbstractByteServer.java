@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @Slf4j
-public abstract class AbstractWsByteServer extends AbstractWsServer {
-    protected AbstractWsByteServer(boolean showLog) {
+public abstract class AbstractByteServer extends AbstractWsServer {
+    protected AbstractByteServer(boolean showLog) {
         super(showLog);
     }
 

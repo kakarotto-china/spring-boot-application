@@ -34,7 +34,7 @@ let app = new Vue({
                 this.verifyJump('./signin.html')
                 break
             default:
-                this.renderHtml('错误', 'error', `访问错误`, `页面加载时，传入不支持的跳转类型`, '', jump)
+                this.renderHtml('错误', 'error', `访问错误`, `页面加载时，传入不支持的跳转类型`, '../index.html', `传入参数：${jump}，返回首页`)
         }
     },
     methods: {
