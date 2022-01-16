@@ -56,7 +56,7 @@ public class TerminalAttachServer {
         terminalConnectInfo.setPort(userTerminal.getPort());
         session = terminalService.connectSession(terminalConnectInfo);
         channel = terminalService.connectChannel(session, terminalConnectInfo);
-        terminalService.consumerTerminal(channel, terminalConnectInfo.getBufferSize(), bytesConsumer);
+        terminalService.consumerTerminal(channel, terminalConnectInfo, bytesConsumer);
     }
 
     @OnMessage

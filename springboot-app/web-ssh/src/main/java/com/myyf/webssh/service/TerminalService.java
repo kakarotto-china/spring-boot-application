@@ -29,10 +29,10 @@ public interface TerminalService {
      * 循环消费通道流
      *
      * @param channel  channel
-     * @param bufferSize bufferSize
+     * @param terminalConnectInfo terminalConnectInfo
      * @param consumer consumer
      */
-    void consumerTerminal(Channel channel, int bufferSize, Consumer<byte[]> consumer);
+    void consumerTerminal(Channel channel, TerminalConnectInfo terminalConnectInfo, Consumer<byte[]> consumer);
 
     /**
      * 向通道发送消息

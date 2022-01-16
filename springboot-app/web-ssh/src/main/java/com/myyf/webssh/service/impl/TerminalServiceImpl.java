@@ -39,16 +39,16 @@ public class TerminalServiceImpl implements TerminalService {
         // 开启shell通道
         Channel channel = session.openChannel("shell");
 //        // 通道连接 超时时间3s
-        channel.connect(terminalConnectInfo.getChannelTimeoutMs());
+//        channel.connect(terminalConnectInfo.getChannelTimeoutMs()); // 在channel链接前开始读取，可获取不到欢迎信息，可以用于过虑掉欢迎信息....
         return channel;
     }
 
     @SneakyThrows
     @Override
-    public void consumerTerminal(Channel channel, int bufferSize, Consumer<byte[]> consumer) {
-        asyncExecutor.loopReading(channel.getInputStream(), bufferSize, consumer);
+    public void consumerTerminal(Channel channel, TerminalConnectInfo terminalConnectInfo, Consumer<byte[]> consumer) {
+        asyncExecutor.loopReading(channel.getInputStream(), terminalConnectInfo.getBufferSize(), consumer);
         // 通道连接 超时时间3s
-        channel.connect(3000); // 在开始读取channel后再链接，可以获取到欢迎信息....
+        channel.connect(terminalConnectInfo.getChannelTimeoutMs()); // 在开始读取channel后再链接，可以获取到欢迎信息....
     }
 
 //    @Override
