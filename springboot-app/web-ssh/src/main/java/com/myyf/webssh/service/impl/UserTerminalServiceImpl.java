@@ -5,6 +5,7 @@ import cn.hutool.extra.ssh.JschUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jcraft.jsch.Session;
 import com.myyf.webssh.WebTerminalApplication;
+import com.myyf.webssh.common.CodeEnum;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.common.exception.DuplicateResourceException;
 import com.myyf.webssh.common.exception.NotFoundException;
@@ -66,8 +67,8 @@ public class UserTerminalServiceImpl implements UserTerminalService {
         LambdaQueryWrapper<UserTerminal> query = new LambdaQueryWrapper<>();
         query.eq(UserTerminal::getUser, userTerminal.getUser()).eq(UserTerminal::getHost, userTerminal.getHost()).eq(UserTerminal::getUid, user.getId());
         UserTerminal uSSH = userTerminalMapper.selectOne(query);
-        if(uSSH!=null){
-            throw new DuplicateResourceException(Result.CodeEnum.DUPLICATE_RESOURCE);
+        if (uSSH != null) {
+            throw new DuplicateResourceException(CodeEnum.DUPLICATE_RESOURCE);
         }
         userTerminal.setUid(user.getId());
         userTerminal.insert();
@@ -78,7 +79,7 @@ public class UserTerminalServiceImpl implements UserTerminalService {
     public UserTerminalVo edit(UserSSHEditDto userSSHEditDto) {
         UserTerminal us = userTerminalMapper.selectById(userSSHEditDto.getId());
         if (us == null) {
-            throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
+            throw new NotFoundException(CodeEnum.NOT_FOUND);
         }
         UserTerminal userTerminal = UserTerminal.CONVERT.toUserSSH(userSSHEditDto);
         userTerminal.updateById();
@@ -96,7 +97,7 @@ public class UserTerminalServiceImpl implements UserTerminalService {
     public UserTerminalDetailVo findDetail(long id) {
         UserTerminal us = userTerminalMapper.selectById(id);
         if (us == null) {
-            throw new NotFoundException(Result.CodeEnum.NOT_FOUND);
+            throw new NotFoundException(CodeEnum.NOT_FOUND);
         }
         UserTerminal userTerminal = new UserTerminal();
         userTerminal.setId(id);
@@ -107,7 +108,7 @@ public class UserTerminalServiceImpl implements UserTerminalService {
     @Override
     public String test(UserSSHTestDto userSSHTestDto) {
         Session session = JschUtil.createSession(userSSHTestDto.getHost(), userSSHTestDto.getPort(), userSSHTestDto.getUser(), userSSHTestDto.getPasswd());
-        session.setTimeout(30*1000);
+        session.setTimeout(30 * 1000);
         String res = JschUtil.exec(session, "who", StandardCharsets.UTF_8);
         JschUtil.close(session);
         return res;

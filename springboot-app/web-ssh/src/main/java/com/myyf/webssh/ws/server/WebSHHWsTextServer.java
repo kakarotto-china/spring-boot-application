@@ -60,7 +60,7 @@
 //                dealCmd(text.getContent());
 //                break;
 //            default:
-//                throw new UnSupportedOperationException(Result.CodeEnum.UN_SUPPORTED);
+//                throw new UnSupportedOperationException(CodeEnum.UN_SUPPORTED);
 //        }
 //    }
 //

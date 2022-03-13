@@ -6,12 +6,12 @@ import com.myyf.webssh.common.International;
 /**
  * 验证异常
  */
-public class VerifyException extends ServiceRuntimeException {
-    public VerifyException(CodeEnum codeEnum) {
+public class UnAuthorizeException extends ServiceRuntimeException {
+    public UnAuthorizeException(CodeEnum codeEnum) {
         super(codeEnum);
     }
 
-    public VerifyException(CodeEnum codeEnum, International error) {
+    public UnAuthorizeException(CodeEnum codeEnum, International error) {
         super(codeEnum, error);
     }
 }

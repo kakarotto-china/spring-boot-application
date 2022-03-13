@@ -17,6 +17,7 @@
     <modules>
         <module>autotable-spring-boot-starter</module>
         <module>mysqlui-spring-boot-starter</module>
+        <module>japidocs-spring-boot-starter</module>
     </modules>
 
     <dependencies>

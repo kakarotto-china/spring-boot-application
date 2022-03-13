@@ -4,7 +4,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myyf.webssh.WebTerminalApplication;
-import com.myyf.webssh.common.Result;
+import com.myyf.webssh.common.CodeEnum;
 import com.myyf.webssh.common.exception.*;
 import com.myyf.webssh.config.prop.AuthProp;
 import com.myyf.webssh.constant.UserStatus;
@@ -54,14 +54,14 @@ public class UserServiceImpl implements UserService {
         // todo 此处查询时不应该使用软删除
         user.setStatus(UserStatus.CREATED); // 创建状态
         if (u != null) {
-            if(u.getStatus() == UserStatus.USED){
+            if (u.getStatus() == UserStatus.USED) {
                 // 用户已存在
-                throw new DuplicateResourceException(Result.CodeEnum.DUPLICATE_RESOURCE);
-            }else{
+                throw new DuplicateResourceException(CodeEnum.DUPLICATE_RESOURCE);
+            } else {
                 user.setId(u.getId());
                 user.updateById();
             }
-        }else{
+        } else {
             user.insert();
         }
         return user.getId();
@@ -75,10 +75,10 @@ public class UserServiceImpl implements UserService {
         wrapper.eq(User::getName, user.getName()).eq(User::getStatus, UserStatus.USED.status);
         User result = userMapper.selectOne(wrapper);
         if (result == null) {
-            throw new LoginException(Result.CodeEnum.USER_NOT_FOUND);
+            throw new LoginException(CodeEnum.USER_NOT_FOUND);
         }
         if (!StrUtil.equals(result.getPasswd(), user.getPasswd())) {
-            throw new LoginException(Result.CodeEnum.USER_PASSWD_ERROR);
+            throw new LoginException(CodeEnum.USER_PASSWD_ERROR);
         }
         String token = JWTUtils.generateToken(result, userSigninDto.isRememberme());
         WebTerminalApplication.getResponse().setHeader("token", token);
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean verifyProducer(long uid) {
-        User user = findUser(uid, () -> new EmailException(Result.CodeEnum.USER_NOT_FOUND));
+        User user = findUser(uid, () -> new EmailException(CodeEnum.USER_NOT_FOUND));
         String verify = sendMail(user);
         // 更新状态为验证中
         user.setAuthCode(verify);
@@ -120,20 +120,20 @@ public class UserServiceImpl implements UserService {
             return verify;
         } catch (MessagingException e) {
             log.error("[verifyProducer]", e);
-            throw new EmailException(Result.CodeEnum.SEND_EMAIL_FAIL);
+            throw new EmailException(CodeEnum.SEND_EMAIL_FAIL);
         }
     }
 
     @Override
     @Transactional
     public void verifyConsumer(long uid, String verifyNums, Consumer<User> consumer) {
-        User user = findUser(uid, () -> new VerifyException(Result.CodeEnum.USER_NOT_FOUND));
+        User user = findUser(uid, () -> new VerifyException(CodeEnum.USER_NOT_FOUND));
         String verify = user.getAuthCode();
         if (StrUtil.isEmpty(verify)) {
-            throw new VerifyException(Result.CodeEnum.VERIFY_EXPIRED);
+            throw new VerifyException(CodeEnum.VERIFY_EXPIRED);
         }
         if (!StrUtil.equals(verify, verifyNums)) {
-            throw new VerifyException(Result.CodeEnum.VERIFY_FAIL);
+            throw new VerifyException(CodeEnum.VERIFY_FAIL);
         }
         // 自动绑定
         consumer.accept(user);
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean verifyCheck(long uid) {
-        User user = findUser(uid, () -> new VerifyException(Result.CodeEnum.USER_NOT_FOUND));
+        User user = findUser(uid, () -> new VerifyException(CodeEnum.USER_NOT_FOUND));
         return user.getStatus() == UserStatus.USED;
     }
 

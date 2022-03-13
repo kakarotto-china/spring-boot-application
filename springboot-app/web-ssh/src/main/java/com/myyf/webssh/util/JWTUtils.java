@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.myyf.webssh.common.CodeEnum;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.entity.User;
 import com.myyf.webssh.common.exception.UnLoginException;
@@ -66,7 +67,7 @@ public class JWTUtils {
             user.setEmail(decodedJWT.getClaim("email").asString());
             return Optional.of(user);
         } catch (JWTVerificationException e) {
-            throw new UnLoginException(Result.CodeEnum.UN_LOGIN);
+            throw new UnLoginException(CodeEnum.UN_LOGIN);
         }
     }
 

@@ -22,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@ComponentScan(basePackages = {"com.huawei"})
-@ServletComponentScan(basePackages = "com.huawei")
+@ComponentScan(basePackages = {"com.example"})
+@ServletComponentScan(basePackages = "com.example")
 @EnableConfigurationProperties( {MysqlUIProperties.class, DatasourceProperties.class})
 // @ConditionalOnProperty(prefix = "mysqlui", name = "enable", havingValue = "true", matchIfMissing = true)
 public class MysqlUIConfig {

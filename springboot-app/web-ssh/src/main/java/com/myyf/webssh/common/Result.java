@@ -1,8 +1,6 @@
 package com.myyf.webssh.common;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * 统一的json返回格式
@@ -12,7 +10,7 @@ import lombok.ToString;
 @Data
 public class Result<D> {
     private int code;
-    private International message;
+    private String message;
     private D data;
 
     private static <T> Result<T> setResultCode(CodeEnum codeEnum) {
@@ -34,8 +32,8 @@ public class Result<D> {
         return result;
     }
 
-    public static Result<?> fail(CodeEnum codeEnum) {
-        Result<?> result = setResultCode(codeEnum);
+    public static <T> Result<T> fail(CodeEnum codeEnum) {
+        Result<T> result = setResultCode(codeEnum);
         result.setData(null);
         return result;
     }
@@ -44,24 +42,9 @@ public class Result<D> {
         return success(null);
     }
 
-
-    @AllArgsConstructor
-    @ToString
-    public enum CodeEnum {
-        SUCCESS(2000, International.of("成功", "success")),
-        FAIL(5000, International.of("失败", "fail")),
-        NOT_FOUND(5001, International.of("资源未找到", "resource not found")),
-        DUPLICATE_RESOURCE(5002, International.of("资源已存在", "resource already exists")),
-        LOGIN_FAIL(5011, International.of("登录失败", "login failed")),
-        UN_LOGIN(5012, International.of("未登录", "not logged in")),
-        USER_NOT_FOUND(5013, International.of("用户未找到", "user not found")),
-        USER_PASSWD_ERROR(5014, International.of("密码不正确", "password is incorrect")),
-        UN_SUPPORTED(5021, International.of("不支持的操作", "unsupported operation")),
-        SEND_EMAIL_FAIL(5031, International.of("发送邮件失败", "send email failed")),
-        VERIFY_EXPIRED(5041, International.of("验证过期", "verify expired")),
-        VERIFY_FAIL(5042, International.of("验证失败", "verify failed"));
-
-        public final int code;
-        public final International info;
+    public static <T> Result<T> fail(CodeEnum codeEnum, T t) {
+        Result<T> result = fail(codeEnum);
+        result.setData(t);
+        return result;
     }
 }

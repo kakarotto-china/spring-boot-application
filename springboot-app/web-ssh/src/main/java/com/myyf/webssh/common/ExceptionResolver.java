@@ -1,8 +1,8 @@
 package com.myyf.webssh.common;
 
 import cn.hutool.core.collection.CollUtil;
-import com.myyf.webssh.common.exception.UnLoginException;
 import com.myyf.webssh.common.exception.ServiceRuntimeException;
+import com.myyf.webssh.common.exception.UnLoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -38,7 +38,7 @@ public class ExceptionResolver {
     @ExceptionHandler(ServiceRuntimeException.class)
     public Result<?> serviceRuntimeException(ServiceRuntimeException e) {
         log.error("[ServiceRuntimeException]", e);
-        return Result.fail(e.codeEnum);
+        return Result.fail(e.codeEnum, e.error);
     }
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "未登录")

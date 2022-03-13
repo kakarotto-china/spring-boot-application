@@ -23,6 +23,10 @@ public class TerminalConnectInfo {
 
     private int bufferSize = 2048;
 
+    private int row = 80;
+
+    private int column = 24;
+
     private final Properties properties = new Properties() {
         {
             this.setProperty("StrictHostKeyChecking", "no"); // 初次连接，不检查，模拟发送yes

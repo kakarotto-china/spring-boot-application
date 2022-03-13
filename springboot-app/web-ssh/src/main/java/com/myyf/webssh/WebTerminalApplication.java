@@ -1,5 +1,7 @@
 package com.myyf.webssh;
 
+import com.myyf.japidocs.annotation.EnableJApiDocs;
+import com.myyf.webssh.common.CodeEnum;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.common.exception.UnLoginException;
 import com.myyf.webssh.entity.User;
@@ -13,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,11 +25,17 @@ import java.util.Objects;
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableJApiDocs(rootPath = "/media/kakarotto/软件/Develop/Java/IDE/IDEA/WorkSpace/springboot-application/springboot-app/web-ssh", projectName = "", version = "v1.0", docsPath = "")
 public class WebTerminalApplication implements WebMvcConfigurer, ApplicationContextAware {
     private static ApplicationContext CONTEXT;
 
     public static void main(String[] args) {
         SpringApplication.run(WebTerminalApplication.class, args);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedHeaders("*").allowedMethods("*").allowedOrigins("http://localhost:8080");
     }
 
     @Override
@@ -53,6 +62,7 @@ public class WebTerminalApplication implements WebMvcConfigurer, ApplicationCont
 
     public static User getUser() {
         String token = getRequest().getHeader("token");
-        return JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(Result.CodeEnum.UN_LOGIN));
+        return JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(
+                CodeEnum.UN_LOGIN));
     }
 }

@@ -2,6 +2,7 @@ package com.myyf.webssh.interceptor;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ClassUtil;
+import com.myyf.webssh.common.CodeEnum;
 import com.myyf.webssh.common.Result;
 import com.myyf.webssh.common.exception.UnLoginException;
 import com.myyf.webssh.util.JWTUtils;
@@ -48,6 +49,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private void checkSignin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String token = Optional.ofNullable(request.getHeader(tokenName)).orElse(request.getParameter(tokenName));
-        JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(Result.CodeEnum.UN_LOGIN));
+        JWTUtils.verify(token).orElseThrow(() -> new UnLoginException(CodeEnum.UN_LOGIN));
     }
 }
